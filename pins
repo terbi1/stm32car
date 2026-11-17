@@ -1,0 +1,6 @@
+hc sr04 - tim1 ch1   - PA8-echo, Trig-PA7
+servo   - tim3 ch1   - PA6-pwm, 
+hc05    - USART1     - PA9-RX, PA10-TX
+l298n   - tim2 ch1,2 - PA0-ENA, PA1-ENB, PA2-IN1, PA3-IN2, PA4-IN3, PA5-IN4
+tmb12a05-            - PB0
+led     -            - PB1

@@ -1,0 +1,488 @@
+ARM GAS  /tmp/ccDFWzFV.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"pi_controller.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Core/Src/pi_controller.c"
+  18              		.global	__aeabi_fadd
+  19              		.section	.text.Feed_Forward,"ax",%progbits
+  20              		.align	1
+  21              		.global	Feed_Forward
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	Feed_Forward:
+  27              	.LVL0:
+  28              	.LFB65:
+   1:Core/Src/pi_controller.c **** #include "pi_controller.h"
+   2:Core/Src/pi_controller.c **** 
+   3:Core/Src/pi_controller.c **** float Feed_Forward(float base, float setpoint) {
+  29              		.loc 1 3 48 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 3 48 is_stmt 0 view .LVU1
+  34 0000 08B5     		push	{r3, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 3, -8
+  38              		.cfi_offset 14, -4
+   4:Core/Src/pi_controller.c ****     return base + Kff * setpoint;
+  39              		.loc 1 4 5 is_stmt 1 view .LVU2
+  40              		.loc 1 4 17 is_stmt 0 view .LVU3
+  41 0002 FFF7FEFF 		bl	__aeabi_fadd
+  42              	.LVL1:
+   5:Core/Src/pi_controller.c **** }
+  43              		.loc 1 5 1 view .LVU4
+  44 0006 08BD     		pop	{r3, pc}
+  45              		.cfi_endproc
+  46              	.LFE65:
+  48              		.global	__aeabi_fmul
+  49              		.section	.text.Proportional,"ax",%progbits
+  50              		.align	1
+  51              		.global	Proportional
+  52              		.syntax unified
+  53              		.thumb
+  54              		.thumb_func
+ARM GAS  /tmp/ccDFWzFV.s 			page 2
+
+
+  56              	Proportional:
+  57              	.LVL2:
+  58              	.LFB66:
+   6:Core/Src/pi_controller.c **** 
+   7:Core/Src/pi_controller.c **** float Proportional(float error) {
+  59              		.loc 1 7 33 is_stmt 1 view -0
+  60              		.cfi_startproc
+  61              		@ args = 0, pretend = 0, frame = 0
+  62              		@ frame_needed = 0, uses_anonymous_args = 0
+  63              		.loc 1 7 33 is_stmt 0 view .LVU6
+  64 0000 08B5     		push	{r3, lr}
+  65              	.LCFI1:
+  66              		.cfi_def_cfa_offset 8
+  67              		.cfi_offset 3, -8
+  68              		.cfi_offset 14, -4
+   8:Core/Src/pi_controller.c ****     return Kp * error;
+  69              		.loc 1 8 5 is_stmt 1 view .LVU7
+  70              		.loc 1 8 15 is_stmt 0 view .LVU8
+  71 0002 4FF07F51 		mov	r1, #1069547520
+  72 0006 FFF7FEFF 		bl	__aeabi_fmul
+  73              	.LVL3:
+   9:Core/Src/pi_controller.c **** }
+  74              		.loc 1 9 1 view .LVU9
+  75 000a 08BD     		pop	{r3, pc}
+  76              		.cfi_endproc
+  77              	.LFE66:
+  79              		.global	__aeabi_fcmpgt
+  80              		.global	__aeabi_fcmplt
+  81              		.section	.text.Integral,"ax",%progbits
+  82              		.align	1
+  83              		.global	Integral
+  84              		.syntax unified
+  85              		.thumb
+  86              		.thumb_func
+  88              	Integral:
+  89              	.LVL4:
+  90              	.LFB67:
+  10:Core/Src/pi_controller.c **** 
+  11:Core/Src/pi_controller.c **** float Integral(float error, float dt, float current_integral, float output) {
+  91              		.loc 1 11 77 is_stmt 1 view -0
+  92              		.cfi_startproc
+  93              		@ args = 0, pretend = 0, frame = 0
+  94              		@ frame_needed = 0, uses_anonymous_args = 0
+  95              		.loc 1 11 77 is_stmt 0 view .LVU11
+  96 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  97              	.LCFI2:
+  98              		.cfi_def_cfa_offset 24
+  99              		.cfi_offset 3, -24
+ 100              		.cfi_offset 4, -20
+ 101              		.cfi_offset 5, -16
+ 102              		.cfi_offset 6, -12
+ 103              		.cfi_offset 7, -8
+ 104              		.cfi_offset 14, -4
+ 105 0002 0646     		mov	r6, r0
+ 106 0004 0F46     		mov	r7, r1
+ 107 0006 1546     		mov	r5, r2
+ 108 0008 1C46     		mov	r4, r3
+ARM GAS  /tmp/ccDFWzFV.s 			page 3
+
+
+  12:Core/Src/pi_controller.c ****     if(output > 100.0f && error > 0) return current_integral;
+ 109              		.loc 1 12 5 is_stmt 1 view .LVU12
+ 110              		.loc 1 12 7 is_stmt 0 view .LVU13
+ 111 000a 1049     		ldr	r1, .L17
+ 112              	.LVL5:
+ 113              		.loc 1 12 7 view .LVU14
+ 114 000c 1846     		mov	r0, r3
+ 115              	.LVL6:
+ 116              		.loc 1 12 7 view .LVU15
+ 117 000e FFF7FEFF 		bl	__aeabi_fcmpgt
+ 118              	.LVL7:
+ 119              		.loc 1 12 7 view .LVU16
+ 120 0012 20B1     		cbz	r0, .L6
+ 121              		.loc 1 12 24 discriminator 1 view .LVU17
+ 122 0014 0021     		movs	r1, #0
+ 123 0016 3046     		mov	r0, r6
+ 124 0018 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 125              	.LVL8:
+ 126 001c A0B9     		cbnz	r0, .L11
+ 127              	.L6:
+  13:Core/Src/pi_controller.c ****     if(output < 0 && error < 0) return current_integral;
+ 128              		.loc 1 13 5 is_stmt 1 view .LVU18
+ 129              		.loc 1 13 7 is_stmt 0 view .LVU19
+ 130 001e 0021     		movs	r1, #0
+ 131 0020 2046     		mov	r0, r4
+ 132 0022 FFF7FEFF 		bl	__aeabi_fcmplt
+ 133              	.LVL9:
+ 134 0026 38B9     		cbnz	r0, .L16
+ 135              	.L9:
+  14:Core/Src/pi_controller.c **** 
+  15:Core/Src/pi_controller.c ****     return current_integral + error * dt;
+ 136              		.loc 1 15 5 is_stmt 1 view .LVU20
+ 137              		.loc 1 15 37 is_stmt 0 view .LVU21
+ 138 0028 3946     		mov	r1, r7
+ 139 002a 3046     		mov	r0, r6
+ 140 002c FFF7FEFF 		bl	__aeabi_fmul
+ 141              	.LVL10:
+ 142              		.loc 1 15 29 view .LVU22
+ 143 0030 2946     		mov	r1, r5
+ 144 0032 FFF7FEFF 		bl	__aeabi_fadd
+ 145              	.LVL11:
+ 146              	.L5:
+  16:Core/Src/pi_controller.c **** }
+ 147              		.loc 1 16 1 view .LVU23
+ 148 0036 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 149              	.LVL12:
+ 150              	.L16:
+  13:Core/Src/pi_controller.c ****     if(output < 0 && error < 0) return current_integral;
+ 151              		.loc 1 13 19 discriminator 1 view .LVU24
+ 152 0038 0021     		movs	r1, #0
+ 153 003a 3046     		mov	r0, r6
+ 154 003c FFF7FEFF 		bl	__aeabi_fcmplt
+ 155              	.LVL13:
+ 156 0040 0028     		cmp	r0, #0
+ 157 0042 F1D0     		beq	.L9
+  13:Core/Src/pi_controller.c ****     if(output < 0 && error < 0) return current_integral;
+ 158              		.loc 1 13 40 discriminator 2 view .LVU25
+ARM GAS  /tmp/ccDFWzFV.s 			page 4
+
+
+ 159 0044 2846     		mov	r0, r5
+ 160 0046 F6E7     		b	.L5
+ 161              	.L11:
+  12:Core/Src/pi_controller.c ****     if(output < 0 && error < 0) return current_integral;
+ 162              		.loc 1 12 45 discriminator 2 view .LVU26
+ 163 0048 2846     		mov	r0, r5
+ 164 004a F4E7     		b	.L5
+ 165              	.L18:
+ 166              		.align	2
+ 167              	.L17:
+ 168 004c 0000C842 		.word	1120403456
+ 169              		.cfi_endproc
+ 170              	.LFE67:
+ 172              		.section	.text.System_Input,"ax",%progbits
+ 173              		.align	1
+ 174              		.global	System_Input
+ 175              		.syntax unified
+ 176              		.thumb
+ 177              		.thumb_func
+ 179              	System_Input:
+ 180              	.LVL14:
+ 181              	.LFB68:
+  17:Core/Src/pi_controller.c **** 
+  18:Core/Src/pi_controller.c **** float System_Input(PI_Controller *p, float base, float setpoint, float error, float dt) {
+ 182              		.loc 1 18 89 is_stmt 1 view -0
+ 183              		.cfi_startproc
+ 184              		@ args = 4, pretend = 0, frame = 0
+ 185              		@ frame_needed = 0, uses_anonymous_args = 0
+ 186              		.loc 1 18 89 is_stmt 0 view .LVU28
+ 187 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 188              	.LCFI3:
+ 189              		.cfi_def_cfa_offset 24
+ 190              		.cfi_offset 3, -24
+ 191              		.cfi_offset 4, -20
+ 192              		.cfi_offset 5, -16
+ 193              		.cfi_offset 6, -12
+ 194              		.cfi_offset 7, -8
+ 195              		.cfi_offset 14, -4
+ 196 0002 0546     		mov	r5, r0
+ 197 0004 0846     		mov	r0, r1
+ 198              	.LVL15:
+ 199              		.loc 1 18 89 view .LVU29
+ 200 0006 1E46     		mov	r6, r3
+  19:Core/Src/pi_controller.c ****     float ff = Feed_Forward(base, setpoint);
+ 201              		.loc 1 19 5 is_stmt 1 view .LVU30
+ 202              		.loc 1 19 16 is_stmt 0 view .LVU31
+ 203 0008 1146     		mov	r1, r2
+ 204              	.LVL16:
+ 205              		.loc 1 19 16 view .LVU32
+ 206 000a FFF7FEFF 		bl	Feed_Forward
+ 207              	.LVL17:
+ 208              		.loc 1 19 16 view .LVU33
+ 209 000e 0446     		mov	r4, r0
+ 210              	.LVL18:
+  20:Core/Src/pi_controller.c ****     float output = ff + Proportional(error) + Ki * p->integral;
+ 211              		.loc 1 20 5 is_stmt 1 view .LVU34
+ 212              		.loc 1 20 25 is_stmt 0 view .LVU35
+ARM GAS  /tmp/ccDFWzFV.s 			page 5
+
+
+ 213 0010 3046     		mov	r0, r6
+ 214              	.LVL19:
+ 215              		.loc 1 20 25 view .LVU36
+ 216 0012 FFF7FEFF 		bl	Proportional
+ 217              	.LVL20:
+ 218              		.loc 1 20 23 discriminator 1 view .LVU37
+ 219 0016 2146     		mov	r1, r4
+ 220 0018 FFF7FEFF 		bl	__aeabi_fadd
+ 221              	.LVL21:
+ 222 001c 0446     		mov	r4, r0
+ 223              	.LVL22:
+ 224              		.loc 1 20 53 discriminator 1 view .LVU38
+ 225 001e 2F68     		ldr	r7, [r5]	@ float
+ 226              		.loc 1 20 50 discriminator 1 view .LVU39
+ 227 0020 0F49     		ldr	r1, .L24
+ 228 0022 3846     		mov	r0, r7
+ 229 0024 FFF7FEFF 		bl	__aeabi_fmul
+ 230              	.LVL23:
+ 231 0028 0146     		mov	r1, r0
+ 232              		.loc 1 20 11 discriminator 1 view .LVU40
+ 233 002a 2046     		mov	r0, r4
+ 234 002c FFF7FEFF 		bl	__aeabi_fadd
+ 235              	.LVL24:
+ 236 0030 0446     		mov	r4, r0
+ 237              	.LVL25:
+  21:Core/Src/pi_controller.c ****     p->integral = Integral(error, dt, p->integral, output);
+ 238              		.loc 1 21 5 is_stmt 1 view .LVU41
+ 239              		.loc 1 21 19 is_stmt 0 view .LVU42
+ 240 0032 0346     		mov	r3, r0
+ 241 0034 3A46     		mov	r2, r7
+ 242 0036 0699     		ldr	r1, [sp, #24]	@ float
+ 243 0038 3046     		mov	r0, r6
+ 244              	.LVL26:
+ 245              		.loc 1 21 19 view .LVU43
+ 246 003a FFF7FEFF 		bl	Integral
+ 247              	.LVL27:
+ 248              		.loc 1 21 17 discriminator 1 view .LVU44
+ 249 003e 2860     		str	r0, [r5]	@ float
+  22:Core/Src/pi_controller.c **** 
+  23:Core/Src/pi_controller.c ****     if(output > 100.0f) output = 100.f;
+ 250              		.loc 1 23 5 is_stmt 1 view .LVU45
+ 251              		.loc 1 23 7 is_stmt 0 view .LVU46
+ 252 0040 0849     		ldr	r1, .L24+4
+ 253 0042 2046     		mov	r0, r4
+ 254 0044 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 255              	.LVL28:
+ 256 0048 30B9     		cbnz	r0, .L21
+  24:Core/Src/pi_controller.c ****     else if(output < 0.0f) output = 0.0f;
+ 257              		.loc 1 24 10 is_stmt 1 view .LVU47
+ 258              		.loc 1 24 12 is_stmt 0 view .LVU48
+ 259 004a 0021     		movs	r1, #0
+ 260 004c 2046     		mov	r0, r4
+ 261 004e FFF7FEFF 		bl	__aeabi_fcmplt
+ 262              	.LVL29:
+ 263 0052 10B1     		cbz	r0, .L19
+ 264              		.loc 1 24 35 discriminator 1 view .LVU49
+ 265 0054 0024     		movs	r4, #0
+ARM GAS  /tmp/ccDFWzFV.s 			page 6
+
+
+ 266              	.LVL30:
+  25:Core/Src/pi_controller.c **** 
+  26:Core/Src/pi_controller.c ****     return output;
+ 267              		.loc 1 26 5 is_stmt 1 view .LVU50
+ 268              		.loc 1 26 12 is_stmt 0 view .LVU51
+ 269 0056 00E0     		b	.L19
+ 270              	.LVL31:
+ 271              	.L21:
+  23:Core/Src/pi_controller.c ****     else if(output < 0.0f) output = 0.0f;
+ 272              		.loc 1 23 32 discriminator 1 view .LVU52
+ 273 0058 024C     		ldr	r4, .L24+4
+ 274              	.LVL32:
+ 275              	.L19:
+  27:Core/Src/pi_controller.c **** };
+ 276              		.loc 1 27 1 view .LVU53
+ 277 005a 2046     		mov	r0, r4
+ 278 005c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 279              	.LVL33:
+ 280              	.L25:
+ 281              		.loc 1 27 1 view .LVU54
+ 282 005e 00BF     		.align	2
+ 283              	.L24:
+ 284 0060 CDCCCC3E 		.word	1053609165
+ 285 0064 0000C842 		.word	1120403456
+ 286              		.cfi_endproc
+ 287              	.LFE68:
+ 289              		.global	__aeabi_i2f
+ 290              		.global	__aeabi_ui2f
+ 291              		.global	__aeabi_fdiv
+ 292              		.section	.text.Speed_Update,"ax",%progbits
+ 293              		.align	1
+ 294              		.global	Speed_Update
+ 295              		.syntax unified
+ 296              		.thumb
+ 297              		.thumb_func
+ 299              	Speed_Update:
+ 300              	.LVL34:
+ 301              	.LFB69:
+  28:Core/Src/pi_controller.c **** 
+  29:Core/Src/pi_controller.c **** float Speed_Update(Speed* spd, int32_t tick, uint32_t t, uint32_t now) {
+ 302              		.loc 1 29 72 is_stmt 1 view -0
+ 303              		.cfi_startproc
+ 304              		@ args = 0, pretend = 0, frame = 0
+ 305              		@ frame_needed = 0, uses_anonymous_args = 0
+ 306              		.loc 1 29 72 is_stmt 0 view .LVU56
+ 307 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 308              	.LCFI4:
+ 309              		.cfi_def_cfa_offset 24
+ 310              		.cfi_offset 3, -24
+ 311              		.cfi_offset 4, -20
+ 312              		.cfi_offset 5, -16
+ 313              		.cfi_offset 6, -12
+ 314              		.cfi_offset 7, -8
+ 315              		.cfi_offset 14, -4
+ 316 0002 0446     		mov	r4, r0
+  30:Core/Src/pi_controller.c ****     int32_t dn = tick - spd->tick;
+ 317              		.loc 1 30 5 is_stmt 1 view .LVU57
+ARM GAS  /tmp/ccDFWzFV.s 			page 7
+
+
+ 318              		.loc 1 30 28 is_stmt 0 view .LVU58
+ 319 0004 0068     		ldr	r0, [r0]
+ 320              	.LVL35:
+ 321              		.loc 1 30 13 view .LVU59
+ 322 0006 081A     		subs	r0, r1, r0
+ 323              	.LVL36:
+  31:Core/Src/pi_controller.c ****     if(dn > 0) {
+ 324              		.loc 1 31 5 is_stmt 1 view .LVU60
+ 325              		.loc 1 31 7 is_stmt 0 view .LVU61
+ 326 0008 0028     		cmp	r0, #0
+ 327 000a 18DD     		ble	.L27
+ 328 000c 0D46     		mov	r5, r1
+ 329 000e 1646     		mov	r6, r2
+  32:Core/Src/pi_controller.c ****         spd->rpm = dn *  1.5f * 72000000.0f / (float)(t-spd->t);
+ 330              		.loc 1 32 9 is_stmt 1 view .LVU62
+ 331              		.loc 1 32 23 is_stmt 0 view .LVU63
+ 332 0010 FFF7FEFF 		bl	__aeabi_i2f
+ 333              	.LVL37:
+ 334              		.loc 1 32 23 view .LVU64
+ 335 0014 4FF07F51 		mov	r1, #1069547520
+ 336 0018 FFF7FEFF 		bl	__aeabi_fmul
+ 337              	.LVL38:
+ 338              		.loc 1 32 31 view .LVU65
+ 339 001c 0C49     		ldr	r1, .L30
+ 340 001e FFF7FEFF 		bl	__aeabi_fmul
+ 341              	.LVL39:
+ 342 0022 0746     		mov	r7, r0
+ 343              		.loc 1 32 60 view .LVU66
+ 344 0024 6068     		ldr	r0, [r4, #4]
+ 345              		.loc 1 32 47 view .LVU67
+ 346 0026 301A     		subs	r0, r6, r0
+ 347 0028 FFF7FEFF 		bl	__aeabi_ui2f
+ 348              	.LVL40:
+ 349 002c 0146     		mov	r1, r0
+ 350              		.loc 1 32 45 view .LVU68
+ 351 002e 3846     		mov	r0, r7
+ 352 0030 FFF7FEFF 		bl	__aeabi_fdiv
+ 353              	.LVL41:
+ 354              		.loc 1 32 18 view .LVU69
+ 355 0034 A060     		str	r0, [r4, #8]	@ float
+  33:Core/Src/pi_controller.c ****         spd->tick = tick;
+ 356              		.loc 1 33 9 is_stmt 1 view .LVU70
+ 357              		.loc 1 33 19 is_stmt 0 view .LVU71
+ 358 0036 2560     		str	r5, [r4]
+  34:Core/Src/pi_controller.c ****         spd->t = t;
+ 359              		.loc 1 34 9 is_stmt 1 view .LVU72
+ 360              		.loc 1 34 16 is_stmt 0 view .LVU73
+ 361 0038 6660     		str	r6, [r4, #4]
+ 362              	.LVL42:
+ 363              	.L28:
+  35:Core/Src/pi_controller.c ****     } else if ((now - spd->t) > 14400000u) {
+  36:Core/Src/pi_controller.c ****         spd->rpm = 0;
+  37:Core/Src/pi_controller.c ****     }
+  38:Core/Src/pi_controller.c **** 
+  39:Core/Src/pi_controller.c ****     return spd->rpm;
+ 364              		.loc 1 39 5 is_stmt 1 view .LVU74
+  40:Core/Src/pi_controller.c **** }...
+ARM GAS  /tmp/ccDFWzFV.s 			page 8
+
+
+ 365              		.loc 1 40 1 is_stmt 0 view .LVU75
+ 366 003a A068     		ldr	r0, [r4, #8]	@ float
+ 367 003c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 368              	.LVL43:
+ 369              	.L27:
+  35:Core/Src/pi_controller.c ****     } else if ((now - spd->t) > 14400000u) {
+ 370              		.loc 1 35 12 is_stmt 1 view .LVU76
+  35:Core/Src/pi_controller.c ****     } else if ((now - spd->t) > 14400000u) {
+ 371              		.loc 1 35 26 is_stmt 0 view .LVU77
+ 372 003e 6268     		ldr	r2, [r4, #4]
+ 373              	.LVL44:
+  35:Core/Src/pi_controller.c ****     } else if ((now - spd->t) > 14400000u) {
+ 374              		.loc 1 35 21 view .LVU78
+ 375 0040 9B1A     		subs	r3, r3, r2
+ 376              	.LVL45:
+  35:Core/Src/pi_controller.c ****     } else if ((now - spd->t) > 14400000u) {
+ 377              		.loc 1 35 15 view .LVU79
+ 378 0042 044A     		ldr	r2, .L30+4
+ 379 0044 9342     		cmp	r3, r2
+ 380 0046 F8D9     		bls	.L28
+  36:Core/Src/pi_controller.c ****         spd->rpm = 0;
+ 381              		.loc 1 36 9 is_stmt 1 view .LVU80
+  36:Core/Src/pi_controller.c ****         spd->rpm = 0;
+ 382              		.loc 1 36 18 is_stmt 0 view .LVU81
+ 383 0048 0023     		movs	r3, #0
+ 384 004a A360     		str	r3, [r4, #8]	@ float
+ 385 004c F5E7     		b	.L28
+ 386              	.L31:
+ 387 004e 00BF     		.align	2
+ 388              	.L30:
+ 389 0050 4054894C 		.word	1284068416
+ 390 0054 00BADB00 		.word	14400000
+ 391              		.cfi_endproc
+ 392              	.LFE69:
+ 394              		.text
+ 395              	.Letext0:
+ 396              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 397              		.file 3 "Core/Inc/pi_controller.h"
+ARM GAS  /tmp/ccDFWzFV.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pi_controller.c
+     /tmp/ccDFWzFV.s:20     .text.Feed_Forward:00000000 $t
+     /tmp/ccDFWzFV.s:26     .text.Feed_Forward:00000000 Feed_Forward
+     /tmp/ccDFWzFV.s:50     .text.Proportional:00000000 $t
+     /tmp/ccDFWzFV.s:56     .text.Proportional:00000000 Proportional
+     /tmp/ccDFWzFV.s:82     .text.Integral:00000000 $t
+     /tmp/ccDFWzFV.s:88     .text.Integral:00000000 Integral
+     /tmp/ccDFWzFV.s:168    .text.Integral:0000004c $d
+     /tmp/ccDFWzFV.s:173    .text.System_Input:00000000 $t
+     /tmp/ccDFWzFV.s:179    .text.System_Input:00000000 System_Input
+     /tmp/ccDFWzFV.s:284    .text.System_Input:00000060 $d
+     /tmp/ccDFWzFV.s:293    .text.Speed_Update:00000000 $t
+     /tmp/ccDFWzFV.s:299    .text.Speed_Update:00000000 Speed_Update
+     /tmp/ccDFWzFV.s:389    .text.Speed_Update:00000050 $d
+
+UNDEFINED SYMBOLS
+__aeabi_fadd
+__aeabi_fmul
+__aeabi_fcmpgt
+__aeabi_fcmplt
+__aeabi_i2f
+__aeabi_ui2f
+__aeabi_fdiv

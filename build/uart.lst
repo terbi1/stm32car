@@ -1,0 +1,823 @@
+ARM GAS  /tmp/cczcXyb5.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"uart.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Core/Src/uart.c"
+  18              		.section	.text.Ring_Buffer_Init,"ax",%progbits
+  19              		.align	1
+  20              		.global	Ring_Buffer_Init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	Ring_Buffer_Init:
+  26              	.LVL0:
+  27              	.LFB70:
+   1:Core/Src/uart.c **** #include "uart.h"
+   2:Core/Src/uart.c **** 
+   3:Core/Src/uart.c **** static TaskHandle_t uartRxTaskHandle = NULL;
+   4:Core/Src/uart.c **** 
+   5:Core/Src/uart.c **** void Ring_Buffer_Init(Ring_Buffer* ring_buffer, uint8_t* buffer, uint16_t buffer_size) {
+  28              		.loc 1 5 88 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+   6:Core/Src/uart.c ****     ring_buffer->buffer = buffer; 
+  33              		.loc 1 6 5 view .LVU1
+  34              		.loc 1 6 25 is_stmt 0 view .LVU2
+  35 0000 0160     		str	r1, [r0]
+   7:Core/Src/uart.c ****     ring_buffer->head = 0;
+  36              		.loc 1 7 5 is_stmt 1 view .LVU3
+  37              		.loc 1 7 23 is_stmt 0 view .LVU4
+  38 0002 0023     		movs	r3, #0
+  39 0004 8380     		strh	r3, [r0, #4]	@ movhi
+   8:Core/Src/uart.c ****     ring_buffer->tail = 0;
+  40              		.loc 1 8 5 is_stmt 1 view .LVU5
+  41              		.loc 1 8 23 is_stmt 0 view .LVU6
+  42 0006 C380     		strh	r3, [r0, #6]	@ movhi
+   9:Core/Src/uart.c ****     ring_buffer->buffer_size = buffer_size;
+  43              		.loc 1 9 5 is_stmt 1 view .LVU7
+  44              		.loc 1 9 30 is_stmt 0 view .LVU8
+  45 0008 0281     		strh	r2, [r0, #8]	@ movhi
+  10:Core/Src/uart.c ****     ring_buffer->filled_size = 0;
+  46              		.loc 1 10 5 is_stmt 1 view .LVU9
+  47              		.loc 1 10 30 is_stmt 0 view .LVU10
+  48 000a 4381     		strh	r3, [r0, #10]	@ movhi
+ARM GAS  /tmp/cczcXyb5.s 			page 2
+
+
+  11:Core/Src/uart.c **** }
+  49              		.loc 1 11 1 view .LVU11
+  50 000c 7047     		bx	lr
+  51              		.cfi_endproc
+  52              	.LFE70:
+  54              		.section	.text.Ring_Buffer_Pop,"ax",%progbits
+  55              		.align	1
+  56              		.global	Ring_Buffer_Pop
+  57              		.syntax unified
+  58              		.thumb
+  59              		.thumb_func
+  61              	Ring_Buffer_Pop:
+  62              	.LVL1:
+  63              	.LFB71:
+  12:Core/Src/uart.c **** 
+  13:Core/Src/uart.c **** bool Ring_Buffer_Pop(Ring_Buffer* ring_buffer, uint8_t* data) {
+  64              		.loc 1 13 63 is_stmt 1 view -0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68              		@ link register save eliminated.
+  14:Core/Src/uart.c ****     if(!ring_buffer->filled_size) return false;
+  69              		.loc 1 14 5 view .LVU13
+  70              		.loc 1 14 20 is_stmt 0 view .LVU14
+  71 0000 4389     		ldrh	r3, [r0, #10]
+  72              		.loc 1 14 7 view .LVU15
+  73 0002 83B1     		cbz	r3, .L4
+  15:Core/Src/uart.c **** 
+  16:Core/Src/uart.c ****     *data = ring_buffer->buffer[ring_buffer->head];
+  74              		.loc 1 16 5 is_stmt 1 view .LVU16
+  75              		.loc 1 16 24 is_stmt 0 view .LVU17
+  76 0004 0268     		ldr	r2, [r0]
+  77              		.loc 1 16 44 view .LVU18
+  78 0006 8388     		ldrh	r3, [r0, #4]
+  79              		.loc 1 16 32 view .LVU19
+  80 0008 D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
+  81              		.loc 1 16 11 view .LVU20
+  82 000a 0B70     		strb	r3, [r1]
+  17:Core/Src/uart.c ****     ring_buffer->head = (ring_buffer->head+1) % ring_buffer->buffer_size;
+  83              		.loc 1 17 5 is_stmt 1 view .LVU21
+  84              		.loc 1 17 37 is_stmt 0 view .LVU22
+  85 000c 8388     		ldrh	r3, [r0, #4]
+  86              		.loc 1 17 43 view .LVU23
+  87 000e 0133     		adds	r3, r3, #1
+  88              		.loc 1 17 60 view .LVU24
+  89 0010 0289     		ldrh	r2, [r0, #8]
+  90              		.loc 1 17 47 view .LVU25
+  91 0012 93FBF2F1 		sdiv	r1, r3, r2
+  92              	.LVL2:
+  93              		.loc 1 17 47 view .LVU26
+  94 0016 02FB1133 		mls	r3, r2, r1, r3
+  95              		.loc 1 17 23 view .LVU27
+  96 001a 8380     		strh	r3, [r0, #4]	@ movhi
+  18:Core/Src/uart.c ****     --ring_buffer->filled_size;
+  97              		.loc 1 18 5 is_stmt 1 view .LVU28
+  98              		.loc 1 18 18 is_stmt 0 view .LVU29
+  99 001c 4389     		ldrh	r3, [r0, #10]
+ARM GAS  /tmp/cczcXyb5.s 			page 3
+
+
+ 100              		.loc 1 18 5 view .LVU30
+ 101 001e 013B     		subs	r3, r3, #1
+ 102 0020 4381     		strh	r3, [r0, #10]	@ movhi
+  19:Core/Src/uart.c **** 
+  20:Core/Src/uart.c ****     return true;
+ 103              		.loc 1 20 5 is_stmt 1 view .LVU31
+ 104              		.loc 1 20 12 is_stmt 0 view .LVU32
+ 105 0022 0120     		movs	r0, #1
+ 106              	.LVL3:
+ 107              		.loc 1 20 12 view .LVU33
+ 108 0024 7047     		bx	lr
+ 109              	.LVL4:
+ 110              	.L4:
+  14:Core/Src/uart.c **** 
+ 111              		.loc 1 14 42 discriminator 1 view .LVU34
+ 112 0026 0020     		movs	r0, #0
+ 113              	.LVL5:
+  21:Core/Src/uart.c **** }
+ 114              		.loc 1 21 1 view .LVU35
+ 115 0028 7047     		bx	lr
+ 116              		.cfi_endproc
+ 117              	.LFE71:
+ 119              		.section	.text.Ring_Buffer_Push,"ax",%progbits
+ 120              		.align	1
+ 121              		.global	Ring_Buffer_Push
+ 122              		.syntax unified
+ 123              		.thumb
+ 124              		.thumb_func
+ 126              	Ring_Buffer_Push:
+ 127              	.LVL6:
+ 128              	.LFB72:
+  22:Core/Src/uart.c **** 
+  23:Core/Src/uart.c **** void Ring_Buffer_Push(Ring_Buffer* ring_buffer, uint8_t data) {
+ 129              		.loc 1 23 63 is_stmt 1 view -0
+ 130              		.cfi_startproc
+ 131              		@ args = 0, pretend = 0, frame = 0
+ 132              		@ frame_needed = 0, uses_anonymous_args = 0
+ 133              		@ link register save eliminated.
+  24:Core/Src/uart.c ****     ring_buffer->buffer[ring_buffer->tail] = data;
+ 134              		.loc 1 24 5 view .LVU37
+ 135              		.loc 1 24 16 is_stmt 0 view .LVU38
+ 136 0000 0268     		ldr	r2, [r0]
+ 137              		.loc 1 24 36 view .LVU39
+ 138 0002 C388     		ldrh	r3, [r0, #6]
+ 139              		.loc 1 24 44 view .LVU40
+ 140 0004 D154     		strb	r1, [r2, r3]
+  25:Core/Src/uart.c ****     ring_buffer->tail = (ring_buffer->tail+1) % ring_buffer->buffer_size;
+ 141              		.loc 1 25 5 is_stmt 1 view .LVU41
+ 142              		.loc 1 25 37 is_stmt 0 view .LVU42
+ 143 0006 C388     		ldrh	r3, [r0, #6]
+ 144              		.loc 1 25 43 view .LVU43
+ 145 0008 0133     		adds	r3, r3, #1
+ 146              		.loc 1 25 60 view .LVU44
+ 147 000a 0289     		ldrh	r2, [r0, #8]
+ 148              		.loc 1 25 47 view .LVU45
+ 149 000c 93FBF2F1 		sdiv	r1, r3, r2
+ 150              	.LVL7:
+ARM GAS  /tmp/cczcXyb5.s 			page 4
+
+
+ 151              		.loc 1 25 47 view .LVU46
+ 152 0010 02FB1133 		mls	r3, r2, r1, r3
+ 153              		.loc 1 25 23 view .LVU47
+ 154 0014 C380     		strh	r3, [r0, #6]	@ movhi
+  26:Core/Src/uart.c ****     
+  27:Core/Src/uart.c ****     if((uint32_t)(ring_buffer->filled_size + 1) > ring_buffer->buffer_size) {
+ 155              		.loc 1 27 5 is_stmt 1 view .LVU48
+ 156              		.loc 1 27 30 is_stmt 0 view .LVU49
+ 157 0016 4389     		ldrh	r3, [r0, #10]
+ 158              		.loc 1 27 44 view .LVU50
+ 159 0018 591C     		adds	r1, r3, #1
+ 160              		.loc 1 27 7 view .LVU51
+ 161 001a 9142     		cmp	r1, r2
+ 162 001c 07D9     		bls	.L6
+  28:Core/Src/uart.c ****         ring_buffer->head = (ring_buffer->head+1) % ring_buffer->buffer_size;
+ 163              		.loc 1 28 9 is_stmt 1 view .LVU52
+ 164              		.loc 1 28 41 is_stmt 0 view .LVU53
+ 165 001e 8388     		ldrh	r3, [r0, #4]
+ 166              		.loc 1 28 47 view .LVU54
+ 167 0020 0133     		adds	r3, r3, #1
+ 168              		.loc 1 28 51 view .LVU55
+ 169 0022 93FBF2F1 		sdiv	r1, r3, r2
+ 170 0026 02FB1133 		mls	r3, r2, r1, r3
+ 171              		.loc 1 28 27 view .LVU56
+ 172 002a 8380     		strh	r3, [r0, #4]	@ movhi
+ 173 002c 7047     		bx	lr
+ 174              	.L6:
+  29:Core/Src/uart.c ****     } else {
+  30:Core/Src/uart.c ****         ++ring_buffer->filled_size;
+ 175              		.loc 1 30 9 is_stmt 1 view .LVU57
+ 176 002e 0133     		adds	r3, r3, #1
+ 177 0030 4381     		strh	r3, [r0, #10]	@ movhi
+  31:Core/Src/uart.c ****     }
+  32:Core/Src/uart.c **** }
+ 178              		.loc 1 32 1 is_stmt 0 view .LVU58
+ 179 0032 7047     		bx	lr
+ 180              		.cfi_endproc
+ 181              	.LFE72:
+ 183              		.section	.text.Ring_Buffer_IsEmpty,"ax",%progbits
+ 184              		.align	1
+ 185              		.global	Ring_Buffer_IsEmpty
+ 186              		.syntax unified
+ 187              		.thumb
+ 188              		.thumb_func
+ 190              	Ring_Buffer_IsEmpty:
+ 191              	.LVL8:
+ 192              	.LFB73:
+  33:Core/Src/uart.c **** bool Ring_Buffer_IsEmpty(Ring_Buffer* ring_buffer) {
+ 193              		.loc 1 33 52 is_stmt 1 view -0
+ 194              		.cfi_startproc
+ 195              		@ args = 0, pretend = 0, frame = 0
+ 196              		@ frame_needed = 0, uses_anonymous_args = 0
+ 197              		@ link register save eliminated.
+  34:Core/Src/uart.c ****     return (ring_buffer->filled_size == 0); 
+ 198              		.loc 1 34 5 view .LVU60
+ 199              		.loc 1 34 24 is_stmt 0 view .LVU61
+ 200 0000 4089     		ldrh	r0, [r0, #10]
+ARM GAS  /tmp/cczcXyb5.s 			page 5
+
+
+ 201              	.LVL9:
+  35:Core/Src/uart.c **** }
+ 202              		.loc 1 35 1 view .LVU62
+ 203 0002 B0FA80F0 		clz	r0, r0
+ 204 0006 4009     		lsrs	r0, r0, #5
+ 205 0008 7047     		bx	lr
+ 206              		.cfi_endproc
+ 207              	.LFE73:
+ 209              		.section	.text.Ring_Buffer_IsFull,"ax",%progbits
+ 210              		.align	1
+ 211              		.global	Ring_Buffer_IsFull
+ 212              		.syntax unified
+ 213              		.thumb
+ 214              		.thumb_func
+ 216              	Ring_Buffer_IsFull:
+ 217              	.LVL10:
+ 218              	.LFB74:
+  36:Core/Src/uart.c **** bool Ring_Buffer_IsFull(Ring_Buffer* ring_buffer) {
+ 219              		.loc 1 36 51 is_stmt 1 view -0
+ 220              		.cfi_startproc
+ 221              		@ args = 0, pretend = 0, frame = 0
+ 222              		@ frame_needed = 0, uses_anonymous_args = 0
+ 223              		@ link register save eliminated.
+  37:Core/Src/uart.c ****     return (ring_buffer->filled_size == ring_buffer->buffer_size);
+ 224              		.loc 1 37 5 view .LVU64
+ 225              		.loc 1 37 24 is_stmt 0 view .LVU65
+ 226 0000 4289     		ldrh	r2, [r0, #10]
+ 227              		.loc 1 37 52 view .LVU66
+ 228 0002 0089     		ldrh	r0, [r0, #8]
+ 229              	.LVL11:
+  38:Core/Src/uart.c **** }
+ 230              		.loc 1 38 1 view .LVU67
+ 231 0004 8242     		cmp	r2, r0
+ 232 0006 14BF     		ite	ne
+ 233 0008 0020     		movne	r0, #0
+ 234 000a 0120     		moveq	r0, #1
+ 235 000c 7047     		bx	lr
+ 236              		.cfi_endproc
+ 237              	.LFE74:
+ 239              		.section	.text.Ring_Buffer_Size,"ax",%progbits
+ 240              		.align	1
+ 241              		.global	Ring_Buffer_Size
+ 242              		.syntax unified
+ 243              		.thumb
+ 244              		.thumb_func
+ 246              	Ring_Buffer_Size:
+ 247              	.LVL12:
+ 248              	.LFB75:
+  39:Core/Src/uart.c **** uint16_t Ring_Buffer_Size(Ring_Buffer* ring_buffer) {
+ 249              		.loc 1 39 53 is_stmt 1 view -0
+ 250              		.cfi_startproc
+ 251              		@ args = 0, pretend = 0, frame = 0
+ 252              		@ frame_needed = 0, uses_anonymous_args = 0
+ 253              		@ link register save eliminated.
+  40:Core/Src/uart.c ****     return ring_buffer->buffer_size;
+ 254              		.loc 1 40 5 view .LVU69
+  41:Core/Src/uart.c **** }
+ARM GAS  /tmp/cczcXyb5.s 			page 6
+
+
+ 255              		.loc 1 41 1 is_stmt 0 view .LVU70
+ 256 0000 0089     		ldrh	r0, [r0, #8]
+ 257              	.LVL13:
+ 258              		.loc 1 41 1 view .LVU71
+ 259 0002 7047     		bx	lr
+ 260              		.cfi_endproc
+ 261              	.LFE75:
+ 263              		.section	.text.Ring_Buffer_Filled_Size,"ax",%progbits
+ 264              		.align	1
+ 265              		.global	Ring_Buffer_Filled_Size
+ 266              		.syntax unified
+ 267              		.thumb
+ 268              		.thumb_func
+ 270              	Ring_Buffer_Filled_Size:
+ 271              	.LVL14:
+ 272              	.LFB76:
+  42:Core/Src/uart.c **** uint16_t Ring_Buffer_Filled_Size(Ring_Buffer* ring_buffer) {
+ 273              		.loc 1 42 60 is_stmt 1 view -0
+ 274              		.cfi_startproc
+ 275              		@ args = 0, pretend = 0, frame = 0
+ 276              		@ frame_needed = 0, uses_anonymous_args = 0
+ 277              		@ link register save eliminated.
+  43:Core/Src/uart.c ****     return ring_buffer->filled_size;
+ 278              		.loc 1 43 5 view .LVU73
+  44:Core/Src/uart.c **** }
+ 279              		.loc 1 44 1 is_stmt 0 view .LVU74
+ 280 0000 4089     		ldrh	r0, [r0, #10]
+ 281              	.LVL15:
+ 282              		.loc 1 44 1 view .LVU75
+ 283 0002 7047     		bx	lr
+ 284              		.cfi_endproc
+ 285              	.LFE76:
+ 287              		.section	.text.UART_Init,"ax",%progbits
+ 288              		.align	1
+ 289              		.global	UART_Init
+ 290              		.syntax unified
+ 291              		.thumb
+ 292              		.thumb_func
+ 294              	UART_Init:
+ 295              	.LVL16:
+ 296              	.LFB77:
+  45:Core/Src/uart.c **** 
+  46:Core/Src/uart.c **** UART u;
+  47:Core/Src/uart.c **** 
+  48:Core/Src/uart.c **** uint8_t data;
+  49:Core/Src/uart.c **** 
+  50:Core/Src/uart.c **** void UART_Init(UART_HandleTypeDef* huart, uint8_t* buffer, uint16_t buffer_size) {
+ 297              		.loc 1 50 82 is_stmt 1 view -0
+ 298              		.cfi_startproc
+ 299              		@ args = 0, pretend = 0, frame = 0
+ 300              		@ frame_needed = 0, uses_anonymous_args = 0
+ 301              		.loc 1 50 82 is_stmt 0 view .LVU77
+ 302 0000 10B5     		push	{r4, lr}
+ 303              	.LCFI0:
+ 304              		.cfi_def_cfa_offset 8
+ 305              		.cfi_offset 4, -8
+ 306              		.cfi_offset 14, -4
+ARM GAS  /tmp/cczcXyb5.s 			page 7
+
+
+  51:Core/Src/uart.c ****     u.uart = huart;
+ 307              		.loc 1 51 5 is_stmt 1 view .LVU78
+ 308              		.loc 1 51 12 is_stmt 0 view .LVU79
+ 309 0002 064C     		ldr	r4, .L14
+ 310 0004 2346     		mov	r3, r4
+ 311 0006 43F8040B 		str	r0, [r3], #4
+  52:Core/Src/uart.c **** 
+  53:Core/Src/uart.c ****     Ring_Buffer_Init(&u.buffer, buffer, buffer_size);
+ 312              		.loc 1 53 5 is_stmt 1 view .LVU80
+ 313 000a 1846     		mov	r0, r3
+ 314              	.LVL17:
+ 315              		.loc 1 53 5 is_stmt 0 view .LVU81
+ 316 000c FFF7FEFF 		bl	Ring_Buffer_Init
+ 317              	.LVL18:
+  54:Core/Src/uart.c **** 
+  55:Core/Src/uart.c ****     HAL_UART_Receive_IT(u.uart, &data, 1);
+ 318              		.loc 1 55 5 is_stmt 1 view .LVU82
+ 319 0010 0122     		movs	r2, #1
+ 320 0012 0349     		ldr	r1, .L14+4
+ 321 0014 2068     		ldr	r0, [r4]
+ 322 0016 FFF7FEFF 		bl	HAL_UART_Receive_IT
+ 323              	.LVL19:
+  56:Core/Src/uart.c **** }
+ 324              		.loc 1 56 1 is_stmt 0 view .LVU83
+ 325 001a 10BD     		pop	{r4, pc}
+ 326              	.L15:
+ 327              		.align	2
+ 328              	.L14:
+ 329 001c 00000000 		.word	u
+ 330 0020 00000000 		.word	data
+ 331              		.cfi_endproc
+ 332              	.LFE77:
+ 334              		.section	.text.UART_SetRxTaskHandle,"ax",%progbits
+ 335              		.align	1
+ 336              		.global	UART_SetRxTaskHandle
+ 337              		.syntax unified
+ 338              		.thumb
+ 339              		.thumb_func
+ 341              	UART_SetRxTaskHandle:
+ 342              	.LVL20:
+ 343              	.LFB78:
+  57:Core/Src/uart.c **** 
+  58:Core/Src/uart.c **** void UART_SetRxTaskHandle(TaskHandle_t handle) {
+ 344              		.loc 1 58 48 is_stmt 1 view -0
+ 345              		.cfi_startproc
+ 346              		@ args = 0, pretend = 0, frame = 0
+ 347              		@ frame_needed = 0, uses_anonymous_args = 0
+ 348              		@ link register save eliminated.
+  59:Core/Src/uart.c ****     uartRxTaskHandle = handle;
+ 349              		.loc 1 59 5 view .LVU85
+ 350              		.loc 1 59 22 is_stmt 0 view .LVU86
+ 351 0000 014B     		ldr	r3, .L17
+ 352 0002 1860     		str	r0, [r3]
+  60:Core/Src/uart.c **** }
+ 353              		.loc 1 60 1 view .LVU87
+ 354 0004 7047     		bx	lr
+ 355              	.L18:
+ARM GAS  /tmp/cczcXyb5.s 			page 8
+
+
+ 356 0006 00BF     		.align	2
+ 357              	.L17:
+ 358 0008 00000000 		.word	uartRxTaskHandle
+ 359              		.cfi_endproc
+ 360              	.LFE78:
+ 362              		.section	.text.UART_Send_String,"ax",%progbits
+ 363              		.align	1
+ 364              		.global	UART_Send_String
+ 365              		.syntax unified
+ 366              		.thumb
+ 367              		.thumb_func
+ 369              	UART_Send_String:
+ 370              	.LVL21:
+ 371              	.LFB79:
+  61:Core/Src/uart.c **** 
+  62:Core/Src/uart.c **** void UART_Send_String(char* str) {
+ 372              		.loc 1 62 34 is_stmt 1 view -0
+ 373              		.cfi_startproc
+ 374              		@ args = 0, pretend = 0, frame = 0
+ 375              		@ frame_needed = 0, uses_anonymous_args = 0
+ 376              		.loc 1 62 34 is_stmt 0 view .LVU89
+ 377 0000 10B5     		push	{r4, lr}
+ 378              	.LCFI1:
+ 379              		.cfi_def_cfa_offset 8
+ 380              		.cfi_offset 4, -8
+ 381              		.cfi_offset 14, -4
+ 382 0002 0446     		mov	r4, r0
+  63:Core/Src/uart.c ****     // char* str;
+  64:Core/Src/uart.c ****     HAL_UART_Transmit(u.uart, (uint8_t*)str, strlen(str), HAL_MAX_DELAY);
+ 383              		.loc 1 64 5 is_stmt 1 view .LVU90
+ 384              		.loc 1 64 46 is_stmt 0 view .LVU91
+ 385 0004 FFF7FEFF 		bl	strlen
+ 386              	.LVL22:
+ 387              		.loc 1 64 5 discriminator 1 view .LVU92
+ 388 0008 4FF0FF33 		mov	r3, #-1
+ 389 000c 82B2     		uxth	r2, r0
+ 390 000e 2146     		mov	r1, r4
+ 391 0010 0248     		ldr	r0, .L21
+ 392 0012 0068     		ldr	r0, [r0]
+ 393 0014 FFF7FEFF 		bl	HAL_UART_Transmit
+ 394              	.LVL23:
+  65:Core/Src/uart.c **** }
+ 395              		.loc 1 65 1 view .LVU93
+ 396 0018 10BD     		pop	{r4, pc}
+ 397              	.LVL24:
+ 398              	.L22:
+ 399              		.loc 1 65 1 view .LVU94
+ 400 001a 00BF     		.align	2
+ 401              	.L21:
+ 402 001c 00000000 		.word	u
+ 403              		.cfi_endproc
+ 404              	.LFE79:
+ 406              		.section	.text.UART_Send_Data,"ax",%progbits
+ 407              		.align	1
+ 408              		.global	UART_Send_Data
+ 409              		.syntax unified
+ 410              		.thumb
+ARM GAS  /tmp/cczcXyb5.s 			page 9
+
+
+ 411              		.thumb_func
+ 413              	UART_Send_Data:
+ 414              	.LVL25:
+ 415              	.LFB80:
+  66:Core/Src/uart.c **** void UART_Send_Data(uint8_t* data, uint16_t len) {
+ 416              		.loc 1 66 50 is_stmt 1 view -0
+ 417              		.cfi_startproc
+ 418              		@ args = 0, pretend = 0, frame = 0
+ 419              		@ frame_needed = 0, uses_anonymous_args = 0
+ 420              		.loc 1 66 50 is_stmt 0 view .LVU96
+ 421 0000 08B5     		push	{r3, lr}
+ 422              	.LCFI2:
+ 423              		.cfi_def_cfa_offset 8
+ 424              		.cfi_offset 3, -8
+ 425              		.cfi_offset 14, -4
+ 426 0002 0A46     		mov	r2, r1
+  67:Core/Src/uart.c ****     // HAL_UART_Transmit_IT(u.uart, data, len);
+  68:Core/Src/uart.c ****     HAL_UART_Transmit(u.uart, data, len, HAL_MAX_DELAY); // <--- CHANGE TO BLOCKING
+ 427              		.loc 1 68 5 is_stmt 1 view .LVU97
+ 428 0004 4FF0FF33 		mov	r3, #-1
+ 429 0008 0146     		mov	r1, r0
+ 430              	.LVL26:
+ 431              		.loc 1 68 5 is_stmt 0 view .LVU98
+ 432 000a 0248     		ldr	r0, .L25
+ 433              	.LVL27:
+ 434              		.loc 1 68 5 view .LVU99
+ 435 000c 0068     		ldr	r0, [r0]
+ 436 000e FFF7FEFF 		bl	HAL_UART_Transmit
+ 437              	.LVL28:
+  69:Core/Src/uart.c **** 
+  70:Core/Src/uart.c **** }
+ 438              		.loc 1 70 1 view .LVU100
+ 439 0012 08BD     		pop	{r3, pc}
+ 440              	.L26:
+ 441              		.align	2
+ 442              	.L25:
+ 443 0014 00000000 		.word	u
+ 444              		.cfi_endproc
+ 445              	.LFE80:
+ 447              		.section	.text.HAL_UART_RxCpltCallback,"ax",%progbits
+ 448              		.align	1
+ 449              		.global	HAL_UART_RxCpltCallback
+ 450              		.syntax unified
+ 451              		.thumb
+ 452              		.thumb_func
+ 454              	HAL_UART_RxCpltCallback:
+ 455              	.LVL29:
+ 456              	.LFB81:
+  71:Core/Src/uart.c **** void UART_Printf(const char* format);
+  72:Core/Src/uart.c **** 
+  73:Core/Src/uart.c **** void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+ 457              		.loc 1 73 56 is_stmt 1 view -0
+ 458              		.cfi_startproc
+ 459              		@ args = 0, pretend = 0, frame = 8
+ 460              		@ frame_needed = 0, uses_anonymous_args = 0
+  74:Core/Src/uart.c ****     if(huart->Instance == u.uart->Instance) {
+ 461              		.loc 1 74 5 view .LVU102
+ARM GAS  /tmp/cczcXyb5.s 			page 10
+
+
+ 462              		.loc 1 74 13 is_stmt 0 view .LVU103
+ 463 0000 0268     		ldr	r2, [r0]
+ 464              		.loc 1 74 28 view .LVU104
+ 465 0002 144B     		ldr	r3, .L36
+ 466 0004 1B68     		ldr	r3, [r3]
+ 467              		.loc 1 74 33 view .LVU105
+ 468 0006 1B68     		ldr	r3, [r3]
+ 469              		.loc 1 74 7 view .LVU106
+ 470 0008 9A42     		cmp	r2, r3
+ 471 000a 00D0     		beq	.L35
+ 472 000c 7047     		bx	lr
+ 473              	.L35:
+  73:Core/Src/uart.c ****     if(huart->Instance == u.uart->Instance) {
+ 474              		.loc 1 73 56 view .LVU107
+ 475 000e 10B5     		push	{r4, lr}
+ 476              	.LCFI3:
+ 477              		.cfi_def_cfa_offset 8
+ 478              		.cfi_offset 4, -8
+ 479              		.cfi_offset 14, -4
+ 480 0010 82B0     		sub	sp, sp, #8
+ 481              	.LCFI4:
+ 482              		.cfi_def_cfa_offset 16
+ 483 0012 0446     		mov	r4, r0
+  75:Core/Src/uart.c ****         Ring_Buffer_Push(&u.buffer, data);
+ 484              		.loc 1 75 9 is_stmt 1 view .LVU108
+ 485 0014 104B     		ldr	r3, .L36+4
+ 486 0016 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 487 0018 1048     		ldr	r0, .L36+8
+ 488              	.LVL30:
+ 489              		.loc 1 75 9 is_stmt 0 view .LVU109
+ 490 001a FFF7FEFF 		bl	Ring_Buffer_Push
+ 491              	.LVL31:
+  76:Core/Src/uart.c **** 
+  77:Core/Src/uart.c ****         if(uartRxTaskHandle != NULL) {
+ 492              		.loc 1 77 9 is_stmt 1 view .LVU110
+ 493              		.loc 1 77 29 is_stmt 0 view .LVU111
+ 494 001e 104B     		ldr	r3, .L36+12
+ 495 0020 1868     		ldr	r0, [r3]
+ 496              		.loc 1 77 11 view .LVU112
+ 497 0022 80B1     		cbz	r0, .L29
+ 498              	.LBB2:
+  78:Core/Src/uart.c ****             BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+ 499              		.loc 1 78 13 is_stmt 1 view .LVU113
+ 500              		.loc 1 78 24 is_stmt 0 view .LVU114
+ 501 0024 0023     		movs	r3, #0
+ 502 0026 0193     		str	r3, [sp, #4]
+  79:Core/Src/uart.c ****             vTaskNotifyGiveFromISR(uartRxTaskHandle, &xHigherPriorityTaskWoken);
+ 503              		.loc 1 79 13 is_stmt 1 view .LVU115
+ 504 0028 01A9     		add	r1, sp, #4
+ 505 002a FFF7FEFF 		bl	vTaskNotifyGiveFromISR
+ 506              	.LVL32:
+  80:Core/Src/uart.c ****             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+ 507              		.loc 1 80 13 view .LVU116
+ 508 002e 019B     		ldr	r3, [sp, #4]
+ 509 0030 4BB1     		cbz	r3, .L29
+ 510              		.loc 1 80 13 discriminator 1 view .LVU117
+ 511 0032 4FF0E023 		mov	r3, #-536813568
+ARM GAS  /tmp/cczcXyb5.s 			page 11
+
+
+ 512 0036 4FF08052 		mov	r2, #268435456
+ 513 003a C3F8042D 		str	r2, [r3, #3332]
+ 514              		.loc 1 80 13 discriminator 1 view .LVU118
+ 515              		.syntax unified
+ 516              	@ 80 "Core/Src/uart.c" 1
+ 517 003e BFF34F8F 		dsb
+ 518              	@ 0 "" 2
+ 519              		.loc 1 80 13 discriminator 1 view .LVU119
+ 520              	@ 80 "Core/Src/uart.c" 1
+ 521 0042 BFF36F8F 		isb
+ 522              	@ 0 "" 2
+ 523              		.loc 1 80 57 discriminator 3 view .LVU120
+ 524              		.thumb
+ 525              		.syntax unified
+ 526              	.L29:
+ 527              	.LBE2:
+  81:Core/Src/uart.c ****         }
+  82:Core/Src/uart.c ****         HAL_UART_Receive_IT(huart, &data, 1);
+ 528              		.loc 1 82 9 view .LVU121
+ 529 0046 0122     		movs	r2, #1
+ 530 0048 0349     		ldr	r1, .L36+4
+ 531 004a 2046     		mov	r0, r4
+ 532 004c FFF7FEFF 		bl	HAL_UART_Receive_IT
+ 533              	.LVL33:
+  83:Core/Src/uart.c ****     }
+  84:Core/Src/uart.c **** }
+ 534              		.loc 1 84 1 is_stmt 0 view .LVU122
+ 535 0050 02B0     		add	sp, sp, #8
+ 536              	.LCFI5:
+ 537              		.cfi_def_cfa_offset 8
+ 538              		@ sp needed
+ 539 0052 10BD     		pop	{r4, pc}
+ 540              	.LVL34:
+ 541              	.L37:
+ 542              		.loc 1 84 1 view .LVU123
+ 543              		.align	2
+ 544              	.L36:
+ 545 0054 00000000 		.word	u
+ 546 0058 00000000 		.word	data
+ 547 005c 04000000 		.word	u+4
+ 548 0060 00000000 		.word	uartRxTaskHandle
+ 549              		.cfi_endproc
+ 550              	.LFE81:
+ 552              		.section	.text.UART_Read_Byte,"ax",%progbits
+ 553              		.align	1
+ 554              		.global	UART_Read_Byte
+ 555              		.syntax unified
+ 556              		.thumb
+ 557              		.thumb_func
+ 559              	UART_Read_Byte:
+ 560              	.LVL35:
+ 561              	.LFB82:
+  85:Core/Src/uart.c **** 
+  86:Core/Src/uart.c **** bool UART_Read_Byte(uint8_t* data) {
+ 562              		.loc 1 86 36 is_stmt 1 view -0
+ 563              		.cfi_startproc
+ 564              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/cczcXyb5.s 			page 12
+
+
+ 565              		@ frame_needed = 0, uses_anonymous_args = 0
+ 566              		.loc 1 86 36 is_stmt 0 view .LVU125
+ 567 0000 08B5     		push	{r3, lr}
+ 568              	.LCFI6:
+ 569              		.cfi_def_cfa_offset 8
+ 570              		.cfi_offset 3, -8
+ 571              		.cfi_offset 14, -4
+ 572 0002 0146     		mov	r1, r0
+  87:Core/Src/uart.c ****     return Ring_Buffer_Pop(&u.buffer, data);
+ 573              		.loc 1 87 5 is_stmt 1 view .LVU126
+ 574              		.loc 1 87 12 is_stmt 0 view .LVU127
+ 575 0004 0148     		ldr	r0, .L40
+ 576              	.LVL36:
+ 577              		.loc 1 87 12 view .LVU128
+ 578 0006 FFF7FEFF 		bl	Ring_Buffer_Pop
+ 579              	.LVL37:
+  88:Core/Src/uart.c **** }
+ 580              		.loc 1 88 1 view .LVU129
+ 581 000a 08BD     		pop	{r3, pc}
+ 582              	.L41:
+ 583              		.align	2
+ 584              	.L40:
+ 585 000c 04000000 		.word	u+4
+ 586              		.cfi_endproc
+ 587              	.LFE82:
+ 589              		.section	.text.UART_Read_Line,"ax",%progbits
+ 590              		.align	1
+ 591              		.global	UART_Read_Line
+ 592              		.syntax unified
+ 593              		.thumb
+ 594              		.thumb_func
+ 596              	UART_Read_Line:
+ 597              	.LVL38:
+ 598              	.LFB83:
+  89:Core/Src/uart.c **** void UART_Read_Line(char* buffer, uint16_t max_len) {
+ 599              		.loc 1 89 53 is_stmt 1 view -0
+ 600              		.cfi_startproc
+ 601              		@ args = 0, pretend = 0, frame = 0
+ 602              		@ frame_needed = 0, uses_anonymous_args = 0
+ 603              		@ link register save eliminated.
+  90:Core/Src/uart.c ****     uint16_t size = u.buffer.filled_size;
+ 604              		.loc 1 90 5 view .LVU131
+  91:Core/Src/uart.c ****     // for(int i - 0;)
+  92:Core/Src/uart.c **** }
+ 605              		.loc 1 92 1 is_stmt 0 view .LVU132
+ 606 0000 7047     		bx	lr
+ 607              		.cfi_endproc
+ 608              	.LFE83:
+ 610              		.section	.text.UART_Available,"ax",%progbits
+ 611              		.align	1
+ 612              		.global	UART_Available
+ 613              		.syntax unified
+ 614              		.thumb
+ 615              		.thumb_func
+ 617              	UART_Available:
+ 618              	.LFB84:
+  93:Core/Src/uart.c **** uint16_t UART_Available() {
+ARM GAS  /tmp/cczcXyb5.s 			page 13
+
+
+ 619              		.loc 1 93 27 is_stmt 1 view -0
+ 620              		.cfi_startproc
+ 621              		@ args = 0, pretend = 0, frame = 0
+ 622              		@ frame_needed = 0, uses_anonymous_args = 0
+ 623              		@ link register save eliminated.
+  94:Core/Src/uart.c ****     return u.buffer.filled_size;
+ 624              		.loc 1 94 5 view .LVU134
+  95:Core/Src/uart.c **** };
+ 625              		.loc 1 95 1 is_stmt 0 view .LVU135
+ 626 0000 014B     		ldr	r3, .L44
+ 627 0002 D889     		ldrh	r0, [r3, #14]
+ 628 0004 7047     		bx	lr
+ 629              	.L45:
+ 630 0006 00BF     		.align	2
+ 631              	.L44:
+ 632 0008 00000000 		.word	u
+ 633              		.cfi_endproc
+ 634              	.LFE84:
+ 636              		.global	data
+ 637              		.section	.bss.data,"aw",%nobits
+ 640              	data:
+ 641 0000 00       		.space	1
+ 642              		.global	u
+ 643              		.section	.bss.u,"aw",%nobits
+ 644              		.align	2
+ 647              	u:
+ 648 0000 00000000 		.space	16
+ 648      00000000 
+ 648      00000000 
+ 648      00000000 
+ 649              		.section	.bss.uartRxTaskHandle,"aw",%nobits
+ 650              		.align	2
+ 653              	uartRxTaskHandle:
+ 654 0000 00000000 		.space	4
+ 655              		.text
+ 656              	.Letext0:
+ 657              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 658              		.file 3 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 659              		.file 4 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h"
+ 660              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 661              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 662              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h"
+ 663              		.file 8 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h"
+ 664              		.file 9 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
+ 665              		.file 10 "Core/Inc/uart.h"
+ 666              		.file 11 "/usr/include/newlib/string.h"
+ARM GAS  /tmp/cczcXyb5.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 uart.c
+     /tmp/cczcXyb5.s:19     .text.Ring_Buffer_Init:00000000 $t
+     /tmp/cczcXyb5.s:25     .text.Ring_Buffer_Init:00000000 Ring_Buffer_Init
+     /tmp/cczcXyb5.s:55     .text.Ring_Buffer_Pop:00000000 $t
+     /tmp/cczcXyb5.s:61     .text.Ring_Buffer_Pop:00000000 Ring_Buffer_Pop
+     /tmp/cczcXyb5.s:120    .text.Ring_Buffer_Push:00000000 $t
+     /tmp/cczcXyb5.s:126    .text.Ring_Buffer_Push:00000000 Ring_Buffer_Push
+     /tmp/cczcXyb5.s:184    .text.Ring_Buffer_IsEmpty:00000000 $t
+     /tmp/cczcXyb5.s:190    .text.Ring_Buffer_IsEmpty:00000000 Ring_Buffer_IsEmpty
+     /tmp/cczcXyb5.s:210    .text.Ring_Buffer_IsFull:00000000 $t
+     /tmp/cczcXyb5.s:216    .text.Ring_Buffer_IsFull:00000000 Ring_Buffer_IsFull
+     /tmp/cczcXyb5.s:240    .text.Ring_Buffer_Size:00000000 $t
+     /tmp/cczcXyb5.s:246    .text.Ring_Buffer_Size:00000000 Ring_Buffer_Size
+     /tmp/cczcXyb5.s:264    .text.Ring_Buffer_Filled_Size:00000000 $t
+     /tmp/cczcXyb5.s:270    .text.Ring_Buffer_Filled_Size:00000000 Ring_Buffer_Filled_Size
+     /tmp/cczcXyb5.s:288    .text.UART_Init:00000000 $t
+     /tmp/cczcXyb5.s:294    .text.UART_Init:00000000 UART_Init
+     /tmp/cczcXyb5.s:329    .text.UART_Init:0000001c $d
+     /tmp/cczcXyb5.s:647    .bss.u:00000000 u
+     /tmp/cczcXyb5.s:640    .bss.data:00000000 data
+     /tmp/cczcXyb5.s:335    .text.UART_SetRxTaskHandle:00000000 $t
+     /tmp/cczcXyb5.s:341    .text.UART_SetRxTaskHandle:00000000 UART_SetRxTaskHandle
+     /tmp/cczcXyb5.s:358    .text.UART_SetRxTaskHandle:00000008 $d
+     /tmp/cczcXyb5.s:653    .bss.uartRxTaskHandle:00000000 uartRxTaskHandle
+     /tmp/cczcXyb5.s:363    .text.UART_Send_String:00000000 $t
+     /tmp/cczcXyb5.s:369    .text.UART_Send_String:00000000 UART_Send_String
+     /tmp/cczcXyb5.s:402    .text.UART_Send_String:0000001c $d
+     /tmp/cczcXyb5.s:407    .text.UART_Send_Data:00000000 $t
+     /tmp/cczcXyb5.s:413    .text.UART_Send_Data:00000000 UART_Send_Data
+     /tmp/cczcXyb5.s:443    .text.UART_Send_Data:00000014 $d
+     /tmp/cczcXyb5.s:448    .text.HAL_UART_RxCpltCallback:00000000 $t
+     /tmp/cczcXyb5.s:454    .text.HAL_UART_RxCpltCallback:00000000 HAL_UART_RxCpltCallback
+     /tmp/cczcXyb5.s:545    .text.HAL_UART_RxCpltCallback:00000054 $d
+     /tmp/cczcXyb5.s:553    .text.UART_Read_Byte:00000000 $t
+     /tmp/cczcXyb5.s:559    .text.UART_Read_Byte:00000000 UART_Read_Byte
+     /tmp/cczcXyb5.s:585    .text.UART_Read_Byte:0000000c $d
+     /tmp/cczcXyb5.s:590    .text.UART_Read_Line:00000000 $t
+     /tmp/cczcXyb5.s:596    .text.UART_Read_Line:00000000 UART_Read_Line
+     /tmp/cczcXyb5.s:611    .text.UART_Available:00000000 $t
+     /tmp/cczcXyb5.s:617    .text.UART_Available:00000000 UART_Available
+     /tmp/cczcXyb5.s:632    .text.UART_Available:00000008 $d
+     /tmp/cczcXyb5.s:641    .bss.data:00000000 $d
+     /tmp/cczcXyb5.s:644    .bss.u:00000000 $d
+     /tmp/cczcXyb5.s:650    .bss.uartRxTaskHandle:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_UART_Receive_IT
+strlen
+HAL_UART_Transmit
+vTaskNotifyGiveFromISR

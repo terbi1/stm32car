@@ -1,0 +1,828 @@
+ARM GAS  /tmp/ccHlNoK4.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"l298n.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Core/Src/l298n.c"
+  18              		.section	.text.L298N_Motor_Init,"ax",%progbits
+  19              		.align	1
+  20              		.global	L298N_Motor_Init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	L298N_Motor_Init:
+  26              	.LVL0:
+  27              	.LFB65:
+   1:Core/Src/l298n.c **** #include <l298n.h>
+   2:Core/Src/l298n.c **** 
+   3:Core/Src/l298n.c **** void L298N_Motor_Init(L298N_Motor *m) {
+  28              		.loc 1 3 39 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 3 39 is_stmt 0 view .LVU1
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  38 0002 0446     		mov	r4, r0
+   4:Core/Src/l298n.c ****     HAL_GPIO_WritePin(m->forward_port, m->forward_pin, RESET);
+  39              		.loc 1 4 5 is_stmt 1 view .LVU2
+  40 0004 0022     		movs	r2, #0
+  41 0006 8188     		ldrh	r1, [r0, #4]
+  42 0008 0068     		ldr	r0, [r0]
+  43              	.LVL1:
+  44              		.loc 1 4 5 is_stmt 0 view .LVU3
+  45 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+  46              	.LVL2:
+   5:Core/Src/l298n.c ****     HAL_GPIO_WritePin(m->backward_port, m->backward_pin, RESET);
+  47              		.loc 1 5 5 is_stmt 1 view .LVU4
+  48 000e 0022     		movs	r2, #0
+  49 0010 A189     		ldrh	r1, [r4, #12]
+  50 0012 A068     		ldr	r0, [r4, #8]
+  51 0014 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  52              	.LVL3:
+   6:Core/Src/l298n.c ****     __HAL_TIM_SetCompare(m->htim, m->channel, 0);
+ARM GAS  /tmp/ccHlNoK4.s 			page 2
+
+
+  53              		.loc 1 6 5 view .LVU5
+  54 0018 6369     		ldr	r3, [r4, #20]
+  55 001a 63B9     		cbnz	r3, .L2
+  56              		.loc 1 6 5 is_stmt 0 discriminator 1 view .LVU6
+  57 001c 2369     		ldr	r3, [r4, #16]
+  58 001e 1B68     		ldr	r3, [r3]
+  59 0020 0022     		movs	r2, #0
+  60 0022 5A63     		str	r2, [r3, #52]
+  61              	.L3:
+   7:Core/Src/l298n.c ****     HAL_TIM_PWM_Start(m->htim, m->channel);
+  62              		.loc 1 7 5 is_stmt 1 view .LVU7
+  63 0024 6169     		ldr	r1, [r4, #20]
+  64 0026 2069     		ldr	r0, [r4, #16]
+  65 0028 FFF7FEFF 		bl	HAL_TIM_PWM_Start
+  66              	.LVL4:
+   8:Core/Src/l298n.c ****     m->dir = STOP;
+  67              		.loc 1 8 5 view .LVU8
+  68              		.loc 1 8 12 is_stmt 0 view .LVU9
+  69 002c 0223     		movs	r3, #2
+  70 002e 2376     		strb	r3, [r4, #24]
+   9:Core/Src/l298n.c ****     m->time_left = 0;
+  71              		.loc 1 9 5 is_stmt 1 view .LVU10
+  72              		.loc 1 9 18 is_stmt 0 view .LVU11
+  73 0030 0023     		movs	r3, #0
+  74 0032 E361     		str	r3, [r4, #28]
+  10:Core/Src/l298n.c **** }
+  75              		.loc 1 10 1 view .LVU12
+  76 0034 10BD     		pop	{r4, pc}
+  77              	.LVL5:
+  78              	.L2:
+   6:Core/Src/l298n.c ****     HAL_TIM_PWM_Start(m->htim, m->channel);
+  79              		.loc 1 6 5 discriminator 2 view .LVU13
+  80 0036 042B     		cmp	r3, #4
+  81 0038 06D0     		beq	.L7
+   6:Core/Src/l298n.c ****     HAL_TIM_PWM_Start(m->htim, m->channel);
+  82              		.loc 1 6 5 discriminator 4 view .LVU14
+  83 003a 082B     		cmp	r3, #8
+  84 003c 09D0     		beq	.L8
+   6:Core/Src/l298n.c ****     HAL_TIM_PWM_Start(m->htim, m->channel);
+  85              		.loc 1 6 5 discriminator 7 view .LVU15
+  86 003e 2369     		ldr	r3, [r4, #16]
+  87 0040 1B68     		ldr	r3, [r3]
+  88 0042 0022     		movs	r2, #0
+  89 0044 1A64     		str	r2, [r3, #64]
+  90 0046 EDE7     		b	.L3
+  91              	.L7:
+   6:Core/Src/l298n.c ****     HAL_TIM_PWM_Start(m->htim, m->channel);
+  92              		.loc 1 6 5 discriminator 3 view .LVU16
+  93 0048 2369     		ldr	r3, [r4, #16]
+  94 004a 1B68     		ldr	r3, [r3]
+  95 004c 0022     		movs	r2, #0
+  96 004e 9A63     		str	r2, [r3, #56]
+  97 0050 E8E7     		b	.L3
+  98              	.L8:
+   6:Core/Src/l298n.c ****     HAL_TIM_PWM_Start(m->htim, m->channel);
+  99              		.loc 1 6 5 discriminator 6 view .LVU17
+ 100 0052 2369     		ldr	r3, [r4, #16]
+ARM GAS  /tmp/ccHlNoK4.s 			page 3
+
+
+ 101 0054 1B68     		ldr	r3, [r3]
+ 102 0056 0022     		movs	r2, #0
+ 103 0058 DA63     		str	r2, [r3, #60]
+ 104 005a E3E7     		b	.L3
+ 105              		.cfi_endproc
+ 106              	.LFE65:
+ 108              		.section	.text.L298N_Motor_Write,"ax",%progbits
+ 109              		.align	1
+ 110              		.global	L298N_Motor_Write
+ 111              		.syntax unified
+ 112              		.thumb
+ 113              		.thumb_func
+ 115              	L298N_Motor_Write:
+ 116              	.LVL6:
+ 117              	.LFB66:
+  11:Core/Src/l298n.c **** 
+  12:Core/Src/l298n.c **** void L298N_Motor_Write(L298N_Motor *m, uint16_t pwm) {
+ 118              		.loc 1 12 54 is_stmt 1 view -0
+ 119              		.cfi_startproc
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122              		@ link register save eliminated.
+  13:Core/Src/l298n.c ****      __HAL_TIM_SET_COMPARE(m->htim, m->channel, pwm);
+ 123              		.loc 1 13 6 view .LVU19
+ 124 0000 4369     		ldr	r3, [r0, #20]
+ 125 0002 1BB9     		cbnz	r3, .L10
+ 126              		.loc 1 13 6 is_stmt 0 discriminator 1 view .LVU20
+ 127 0004 0369     		ldr	r3, [r0, #16]
+ 128 0006 1B68     		ldr	r3, [r3]
+ 129 0008 5963     		str	r1, [r3, #52]
+ 130 000a 7047     		bx	lr
+ 131              	.L10:
+ 132              		.loc 1 13 6 discriminator 2 view .LVU21
+ 133 000c 042B     		cmp	r3, #4
+ 134 000e 05D0     		beq	.L14
+ 135              		.loc 1 13 6 discriminator 4 view .LVU22
+ 136 0010 082B     		cmp	r3, #8
+ 137 0012 07D0     		beq	.L15
+ 138              		.loc 1 13 6 discriminator 7 view .LVU23
+ 139 0014 0369     		ldr	r3, [r0, #16]
+ 140 0016 1B68     		ldr	r3, [r3]
+ 141 0018 1964     		str	r1, [r3, #64]
+  14:Core/Src/l298n.c **** }
+ 142              		.loc 1 14 1 view .LVU24
+ 143 001a 7047     		bx	lr
+ 144              	.L14:
+  13:Core/Src/l298n.c ****      __HAL_TIM_SET_COMPARE(m->htim, m->channel, pwm);
+ 145              		.loc 1 13 6 discriminator 3 view .LVU25
+ 146 001c 0369     		ldr	r3, [r0, #16]
+ 147 001e 1B68     		ldr	r3, [r3]
+ 148 0020 9963     		str	r1, [r3, #56]
+ 149 0022 7047     		bx	lr
+ 150              	.L15:
+  13:Core/Src/l298n.c ****      __HAL_TIM_SET_COMPARE(m->htim, m->channel, pwm);
+ 151              		.loc 1 13 6 discriminator 6 view .LVU26
+ 152 0024 0369     		ldr	r3, [r0, #16]
+ 153 0026 1B68     		ldr	r3, [r3]
+ARM GAS  /tmp/ccHlNoK4.s 			page 4
+
+
+ 154 0028 D963     		str	r1, [r3, #60]
+ 155 002a 7047     		bx	lr
+ 156              		.cfi_endproc
+ 157              	.LFE66:
+ 159              		.section	.text.L298N_Brake,"ax",%progbits
+ 160              		.align	1
+ 161              		.global	L298N_Brake
+ 162              		.syntax unified
+ 163              		.thumb
+ 164              		.thumb_func
+ 166              	L298N_Brake:
+ 167              	.LVL7:
+ 168              	.LFB69:
+  15:Core/Src/l298n.c **** 
+  16:Core/Src/l298n.c **** void L298N_Forward(L298N_Motor *m, uint8_t duty_pct) {
+  17:Core/Src/l298n.c ****     // L298N_Coast(m);
+  18:Core/Src/l298n.c **** 
+  19:Core/Src/l298n.c ****     while(!L298N_Motor_Check_Direction(m, FORWARD)) {
+  20:Core/Src/l298n.c **** 
+  21:Core/Src/l298n.c ****     }
+  22:Core/Src/l298n.c **** 
+  23:Core/Src/l298n.c ****     HAL_GPIO_WritePin(m->forward_port, m->forward_pin, RESET);
+  24:Core/Src/l298n.c ****     HAL_GPIO_WritePin(m->backward_port, m->backward_pin, SET);
+  25:Core/Src/l298n.c ****     __HAL_TIM_SetCompare(m->htim, m->channel, 0);    
+  26:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+  27:Core/Src/l298n.c ****     m->dir = FORWARD;
+  28:Core/Src/l298n.c **** }
+  29:Core/Src/l298n.c **** 
+  30:Core/Src/l298n.c **** void L298N_Backward(L298N_Motor *m, uint8_t duty_pct) {
+  31:Core/Src/l298n.c ****     // L298N_Coast(m);
+  32:Core/Src/l298n.c **** 
+  33:Core/Src/l298n.c ****     while(!L298N_Motor_Check_Direction(m, BACKWARD)) {
+  34:Core/Src/l298n.c ****         
+  35:Core/Src/l298n.c ****     }
+  36:Core/Src/l298n.c **** 
+  37:Core/Src/l298n.c ****     HAL_GPIO_WritePin(m->forward_port, m->forward_pin, SET);
+  38:Core/Src/l298n.c ****     HAL_GPIO_WritePin(m->backward_port, m->backward_pin, RESET);
+  39:Core/Src/l298n.c ****     __HAL_TIM_SetCompare(m->htim, m->channel, 0);    
+  40:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+  41:Core/Src/l298n.c ****     m->dir = BACKWARD;
+  42:Core/Src/l298n.c **** }
+  43:Core/Src/l298n.c **** void L298N_Brake(L298N_Motor *m) {
+ 169              		.loc 1 43 34 is_stmt 1 view -0
+ 170              		.cfi_startproc
+ 171              		@ args = 0, pretend = 0, frame = 0
+ 172              		@ frame_needed = 0, uses_anonymous_args = 0
+ 173              		.loc 1 43 34 is_stmt 0 view .LVU28
+ 174 0000 10B5     		push	{r4, lr}
+ 175              	.LCFI1:
+ 176              		.cfi_def_cfa_offset 8
+ 177              		.cfi_offset 4, -8
+ 178              		.cfi_offset 14, -4
+ 179 0002 0446     		mov	r4, r0
+  44:Core/Src/l298n.c ****     HAL_GPIO_WritePin(m->forward_port, m->forward_pin, SET);
+ 180              		.loc 1 44 5 is_stmt 1 view .LVU29
+ 181 0004 0122     		movs	r2, #1
+ 182 0006 8188     		ldrh	r1, [r0, #4]
+ARM GAS  /tmp/ccHlNoK4.s 			page 5
+
+
+ 183 0008 0068     		ldr	r0, [r0]
+ 184              	.LVL8:
+ 185              		.loc 1 44 5 is_stmt 0 view .LVU30
+ 186 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 187              	.LVL9:
+  45:Core/Src/l298n.c ****     HAL_GPIO_WritePin(m->backward_port, m->backward_pin, SET);
+ 188              		.loc 1 45 5 is_stmt 1 view .LVU31
+ 189 000e 0122     		movs	r2, #1
+ 190 0010 A189     		ldrh	r1, [r4, #12]
+ 191 0012 A068     		ldr	r0, [r4, #8]
+ 192 0014 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 193              	.LVL10:
+  46:Core/Src/l298n.c ****     __HAL_TIM_SetCompare(m->htim, m->channel, PWM_PERIOD);
+ 194              		.loc 1 46 5 view .LVU32
+ 195 0018 6369     		ldr	r3, [r4, #20]
+ 196 001a 3BB9     		cbnz	r3, .L17
+ 197              		.loc 1 46 5 is_stmt 0 discriminator 1 view .LVU33
+ 198 001c 2369     		ldr	r3, [r4, #16]
+ 199 001e 1B68     		ldr	r3, [r3]
+ 200 0020 4FF47A72 		mov	r2, #1000
+ 201 0024 5A63     		str	r2, [r3, #52]
+ 202              	.L18:
+  47:Core/Src/l298n.c ****     m->dir = STOP;
+ 203              		.loc 1 47 5 is_stmt 1 view .LVU34
+ 204              		.loc 1 47 12 is_stmt 0 view .LVU35
+ 205 0026 0223     		movs	r3, #2
+ 206 0028 2376     		strb	r3, [r4, #24]
+  48:Core/Src/l298n.c ****     // HAL_Delay(500);
+  49:Core/Src/l298n.c **** }
+ 207              		.loc 1 49 1 view .LVU36
+ 208 002a 10BD     		pop	{r4, pc}
+ 209              	.LVL11:
+ 210              	.L17:
+  46:Core/Src/l298n.c ****     m->dir = STOP;
+ 211              		.loc 1 46 5 discriminator 2 view .LVU37
+ 212 002c 042B     		cmp	r3, #4
+ 213 002e 07D0     		beq	.L22
+  46:Core/Src/l298n.c ****     m->dir = STOP;
+ 214              		.loc 1 46 5 discriminator 4 view .LVU38
+ 215 0030 082B     		cmp	r3, #8
+ 216 0032 0BD0     		beq	.L23
+  46:Core/Src/l298n.c ****     m->dir = STOP;
+ 217              		.loc 1 46 5 discriminator 7 view .LVU39
+ 218 0034 2369     		ldr	r3, [r4, #16]
+ 219 0036 1B68     		ldr	r3, [r3]
+ 220 0038 4FF47A72 		mov	r2, #1000
+ 221 003c 1A64     		str	r2, [r3, #64]
+ 222 003e F2E7     		b	.L18
+ 223              	.L22:
+  46:Core/Src/l298n.c ****     m->dir = STOP;
+ 224              		.loc 1 46 5 discriminator 3 view .LVU40
+ 225 0040 2369     		ldr	r3, [r4, #16]
+ 226 0042 1B68     		ldr	r3, [r3]
+ 227 0044 4FF47A72 		mov	r2, #1000
+ 228 0048 9A63     		str	r2, [r3, #56]
+ 229 004a ECE7     		b	.L18
+ 230              	.L23:
+ARM GAS  /tmp/ccHlNoK4.s 			page 6
+
+
+  46:Core/Src/l298n.c ****     m->dir = STOP;
+ 231              		.loc 1 46 5 discriminator 6 view .LVU41
+ 232 004c 2369     		ldr	r3, [r4, #16]
+ 233 004e 1B68     		ldr	r3, [r3]
+ 234 0050 4FF47A72 		mov	r2, #1000
+ 235 0054 DA63     		str	r2, [r3, #60]
+ 236 0056 E6E7     		b	.L18
+ 237              		.cfi_endproc
+ 238              	.LFE69:
+ 240              		.section	.text.L298N_Coast,"ax",%progbits
+ 241              		.align	1
+ 242              		.global	L298N_Coast
+ 243              		.syntax unified
+ 244              		.thumb
+ 245              		.thumb_func
+ 247              	L298N_Coast:
+ 248              	.LVL12:
+ 249              	.LFB70:
+  50:Core/Src/l298n.c **** void L298N_Coast(L298N_Motor *m) {
+ 250              		.loc 1 50 34 is_stmt 1 view -0
+ 251              		.cfi_startproc
+ 252              		@ args = 0, pretend = 0, frame = 0
+ 253              		@ frame_needed = 0, uses_anonymous_args = 0
+ 254              		.loc 1 50 34 is_stmt 0 view .LVU43
+ 255 0000 10B5     		push	{r4, lr}
+ 256              	.LCFI2:
+ 257              		.cfi_def_cfa_offset 8
+ 258              		.cfi_offset 4, -8
+ 259              		.cfi_offset 14, -4
+ 260 0002 0446     		mov	r4, r0
+  51:Core/Src/l298n.c ****     HAL_GPIO_WritePin(m->forward_port, m->forward_pin, RESET);
+ 261              		.loc 1 51 5 is_stmt 1 view .LVU44
+ 262 0004 0022     		movs	r2, #0
+ 263 0006 8188     		ldrh	r1, [r0, #4]
+ 264 0008 0068     		ldr	r0, [r0]
+ 265              	.LVL13:
+ 266              		.loc 1 51 5 is_stmt 0 view .LVU45
+ 267 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 268              	.LVL14:
+  52:Core/Src/l298n.c ****     HAL_GPIO_WritePin(m->backward_port, m->backward_pin, RESET);
+ 269              		.loc 1 52 5 is_stmt 1 view .LVU46
+ 270 000e 0022     		movs	r2, #0
+ 271 0010 A189     		ldrh	r1, [r4, #12]
+ 272 0012 A068     		ldr	r0, [r4, #8]
+ 273 0014 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 274              	.LVL15:
+  53:Core/Src/l298n.c ****     __HAL_TIM_SetCompare(m->htim, m->channel, 0);
+ 275              		.loc 1 53 5 view .LVU47
+ 276 0018 6369     		ldr	r3, [r4, #20]
+ 277 001a 33B9     		cbnz	r3, .L25
+ 278              		.loc 1 53 5 is_stmt 0 discriminator 1 view .LVU48
+ 279 001c 2369     		ldr	r3, [r4, #16]
+ 280 001e 1B68     		ldr	r3, [r3]
+ 281 0020 0022     		movs	r2, #0
+ 282 0022 5A63     		str	r2, [r3, #52]
+ 283              	.L26:
+  54:Core/Src/l298n.c ****     m->dir = STOP;
+ARM GAS  /tmp/ccHlNoK4.s 			page 7
+
+
+ 284              		.loc 1 54 5 is_stmt 1 view .LVU49
+ 285              		.loc 1 54 12 is_stmt 0 view .LVU50
+ 286 0024 0223     		movs	r3, #2
+ 287 0026 2376     		strb	r3, [r4, #24]
+  55:Core/Src/l298n.c ****     // HAL_Delay(500);
+  56:Core/Src/l298n.c **** }
+ 288              		.loc 1 56 1 view .LVU51
+ 289 0028 10BD     		pop	{r4, pc}
+ 290              	.LVL16:
+ 291              	.L25:
+  53:Core/Src/l298n.c ****     m->dir = STOP;
+ 292              		.loc 1 53 5 discriminator 2 view .LVU52
+ 293 002a 042B     		cmp	r3, #4
+ 294 002c 06D0     		beq	.L30
+  53:Core/Src/l298n.c ****     m->dir = STOP;
+ 295              		.loc 1 53 5 discriminator 4 view .LVU53
+ 296 002e 082B     		cmp	r3, #8
+ 297 0030 09D0     		beq	.L31
+  53:Core/Src/l298n.c ****     m->dir = STOP;
+ 298              		.loc 1 53 5 discriminator 7 view .LVU54
+ 299 0032 2369     		ldr	r3, [r4, #16]
+ 300 0034 1B68     		ldr	r3, [r3]
+ 301 0036 0022     		movs	r2, #0
+ 302 0038 1A64     		str	r2, [r3, #64]
+ 303 003a F3E7     		b	.L26
+ 304              	.L30:
+  53:Core/Src/l298n.c ****     m->dir = STOP;
+ 305              		.loc 1 53 5 discriminator 3 view .LVU55
+ 306 003c 2369     		ldr	r3, [r4, #16]
+ 307 003e 1B68     		ldr	r3, [r3]
+ 308 0040 0022     		movs	r2, #0
+ 309 0042 9A63     		str	r2, [r3, #56]
+ 310 0044 EEE7     		b	.L26
+ 311              	.L31:
+  53:Core/Src/l298n.c ****     m->dir = STOP;
+ 312              		.loc 1 53 5 discriminator 6 view .LVU56
+ 313 0046 2369     		ldr	r3, [r4, #16]
+ 314 0048 1B68     		ldr	r3, [r3]
+ 315 004a 0022     		movs	r2, #0
+ 316 004c DA63     		str	r2, [r3, #60]
+ 317 004e E9E7     		b	.L26
+ 318              		.cfi_endproc
+ 319              	.LFE70:
+ 321              		.section	.text.L298N_Motor_Check_Direction,"ax",%progbits
+ 322              		.align	1
+ 323              		.global	L298N_Motor_Check_Direction
+ 324              		.syntax unified
+ 325              		.thumb
+ 326              		.thumb_func
+ 328              	L298N_Motor_Check_Direction:
+ 329              	.LVL17:
+ 330              	.LFB71:
+  57:Core/Src/l298n.c **** 
+  58:Core/Src/l298n.c **** bool L298N_Motor_Check_Direction(L298N_Motor *m, enum DIRECTION new_dir) {
+ 331              		.loc 1 58 74 is_stmt 1 view -0
+ 332              		.cfi_startproc
+ 333              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccHlNoK4.s 			page 8
+
+
+ 334              		@ frame_needed = 0, uses_anonymous_args = 0
+  59:Core/Src/l298n.c ****     if(m->dir == new_dir) {
+ 335              		.loc 1 59 5 view .LVU58
+ 336              		.loc 1 59 9 is_stmt 0 view .LVU59
+ 337 0000 037E     		ldrb	r3, [r0, #24]	@ zero_extendqisi2
+ 338              		.loc 1 59 7 view .LVU60
+ 339 0002 8B42     		cmp	r3, r1
+ 340 0004 19D0     		beq	.L35
+  58:Core/Src/l298n.c ****     if(m->dir == new_dir) {
+ 341              		.loc 1 58 74 view .LVU61
+ 342 0006 10B5     		push	{r4, lr}
+ 343              	.LCFI3:
+ 344              		.cfi_def_cfa_offset 8
+ 345              		.cfi_offset 4, -8
+ 346              		.cfi_offset 14, -4
+ 347 0008 0446     		mov	r4, r0
+  60:Core/Src/l298n.c ****         return true;
+  61:Core/Src/l298n.c ****     }
+  62:Core/Src/l298n.c **** 
+  63:Core/Src/l298n.c ****     if(m->dir == STOP) {
+ 348              		.loc 1 63 5 is_stmt 1 view .LVU62
+ 349              		.loc 1 63 7 is_stmt 0 view .LVU63
+ 350 000a 022B     		cmp	r3, #2
+ 351 000c 0BD1     		bne	.L34
+  64:Core/Src/l298n.c ****         if(m->time_left == 0) return true;
+ 352              		.loc 1 64 9 is_stmt 1 view .LVU64
+ 353              		.loc 1 64 13 is_stmt 0 view .LVU65
+ 354 000e C369     		ldr	r3, [r0, #28]
+ 355              		.loc 1 64 11 view .LVU66
+ 356 0010 0BB9     		cbnz	r3, .L42
+ 357              		.loc 1 64 38 discriminator 1 view .LVU67
+ 358 0012 0120     		movs	r0, #1
+ 359              	.LVL18:
+ 360              		.loc 1 64 38 discriminator 1 view .LVU68
+ 361 0014 10E0     		b	.L33
+ 362              	.LVL19:
+ 363              	.L42:
+  65:Core/Src/l298n.c ****         if((int32_t)(HAL_GetTick() - m->time_left) >= 0) return true;
+ 364              		.loc 1 65 9 is_stmt 1 view .LVU69
+ 365              		.loc 1 65 22 is_stmt 0 view .LVU70
+ 366 0016 FFF7FEFF 		bl	HAL_GetTick
+ 367              	.LVL20:
+ 368              		.loc 1 65 39 discriminator 1 view .LVU71
+ 369 001a E369     		ldr	r3, [r4, #28]
+ 370              		.loc 1 65 36 discriminator 1 view .LVU72
+ 371 001c C01A     		subs	r0, r0, r3
+ 372              		.loc 1 65 11 discriminator 1 view .LVU73
+ 373 001e 0028     		cmp	r0, #0
+ 374 0020 0DDB     		blt	.L37
+ 375              		.loc 1 65 65 discriminator 1 view .LVU74
+ 376 0022 0120     		movs	r0, #1
+ 377 0024 08E0     		b	.L33
+ 378              	.LVL21:
+ 379              	.L34:
+  66:Core/Src/l298n.c ****         return false;
+  67:Core/Src/l298n.c ****     }
+  68:Core/Src/l298n.c **** 
+ARM GAS  /tmp/ccHlNoK4.s 			page 9
+
+
+  69:Core/Src/l298n.c ****     L298N_Coast(m);
+ 380              		.loc 1 69 5 is_stmt 1 view .LVU75
+ 381 0026 FFF7FEFF 		bl	L298N_Coast
+ 382              	.LVL22:
+  70:Core/Src/l298n.c ****     m->dir = STOP;
+ 383              		.loc 1 70 5 view .LVU76
+ 384              		.loc 1 70 12 is_stmt 0 view .LVU77
+ 385 002a 0223     		movs	r3, #2
+ 386 002c 2376     		strb	r3, [r4, #24]
+  71:Core/Src/l298n.c ****     m->time_left = HAL_GetTick() + GUARD_TIME_MS;
+ 387              		.loc 1 71 5 is_stmt 1 view .LVU78
+ 388              		.loc 1 71 20 is_stmt 0 view .LVU79
+ 389 002e FFF7FEFF 		bl	HAL_GetTick
+ 390              	.LVL23:
+ 391              		.loc 1 71 34 discriminator 1 view .LVU80
+ 392 0032 5030     		adds	r0, r0, #80
+ 393              		.loc 1 71 18 discriminator 1 view .LVU81
+ 394 0034 E061     		str	r0, [r4, #28]
+  72:Core/Src/l298n.c **** 
+  73:Core/Src/l298n.c ****     return false;
+ 395              		.loc 1 73 5 is_stmt 1 view .LVU82
+ 396              		.loc 1 73 12 is_stmt 0 view .LVU83
+ 397 0036 0020     		movs	r0, #0
+ 398              	.L33:
+  74:Core/Src/l298n.c **** }
+ 399              		.loc 1 74 1 view .LVU84
+ 400 0038 10BD     		pop	{r4, pc}
+ 401              	.LVL24:
+ 402              	.L35:
+ 403              	.LCFI4:
+ 404              		.cfi_def_cfa_offset 0
+ 405              		.cfi_restore 4
+ 406              		.cfi_restore 14
+  60:Core/Src/l298n.c ****     }
+ 407              		.loc 1 60 16 view .LVU85
+ 408 003a 0120     		movs	r0, #1
+ 409              	.LVL25:
+ 410              		.loc 1 74 1 view .LVU86
+ 411 003c 7047     		bx	lr
+ 412              	.LVL26:
+ 413              	.L37:
+ 414              	.LCFI5:
+ 415              		.cfi_def_cfa_offset 8
+ 416              		.cfi_offset 4, -8
+ 417              		.cfi_offset 14, -4
+  66:Core/Src/l298n.c ****     }
+ 418              		.loc 1 66 16 view .LVU87
+ 419 003e 0020     		movs	r0, #0
+ 420 0040 FAE7     		b	.L33
+ 421              		.cfi_endproc
+ 422              	.LFE71:
+ 424              		.section	.text.L298N_Forward,"ax",%progbits
+ 425              		.align	1
+ 426              		.global	L298N_Forward
+ 427              		.syntax unified
+ 428              		.thumb
+ 429              		.thumb_func
+ARM GAS  /tmp/ccHlNoK4.s 			page 10
+
+
+ 431              	L298N_Forward:
+ 432              	.LVL27:
+ 433              	.LFB67:
+  16:Core/Src/l298n.c ****     // L298N_Coast(m);
+ 434              		.loc 1 16 54 is_stmt 1 view -0
+ 435              		.cfi_startproc
+ 436              		@ args = 0, pretend = 0, frame = 0
+ 437              		@ frame_needed = 0, uses_anonymous_args = 0
+  16:Core/Src/l298n.c ****     // L298N_Coast(m);
+ 438              		.loc 1 16 54 is_stmt 0 view .LVU89
+ 439 0000 38B5     		push	{r3, r4, r5, lr}
+ 440              	.LCFI6:
+ 441              		.cfi_def_cfa_offset 16
+ 442              		.cfi_offset 3, -16
+ 443              		.cfi_offset 4, -12
+ 444              		.cfi_offset 5, -8
+ 445              		.cfi_offset 14, -4
+ 446 0002 0446     		mov	r4, r0
+ 447 0004 0D46     		mov	r5, r1
+  19:Core/Src/l298n.c **** 
+ 448              		.loc 1 19 5 is_stmt 1 view .LVU90
+ 449              	.LVL28:
+ 450              	.L44:
+  21:Core/Src/l298n.c **** 
+ 451              		.loc 1 21 5 view .LVU91
+  19:Core/Src/l298n.c **** 
+ 452              		.loc 1 19 11 discriminator 1 view .LVU92
+  19:Core/Src/l298n.c **** 
+ 453              		.loc 1 19 12 is_stmt 0 discriminator 1 view .LVU93
+ 454 0006 0021     		movs	r1, #0
+ 455 0008 2046     		mov	r0, r4
+ 456 000a FFF7FEFF 		bl	L298N_Motor_Check_Direction
+ 457              	.LVL29:
+  19:Core/Src/l298n.c **** 
+ 458              		.loc 1 19 11 discriminator 1 view .LVU94
+ 459 000e 0028     		cmp	r0, #0
+ 460 0010 F9D0     		beq	.L44
+  23:Core/Src/l298n.c ****     HAL_GPIO_WritePin(m->backward_port, m->backward_pin, SET);
+ 461              		.loc 1 23 5 is_stmt 1 view .LVU95
+ 462 0012 0022     		movs	r2, #0
+ 463 0014 A188     		ldrh	r1, [r4, #4]
+ 464 0016 2068     		ldr	r0, [r4]
+ 465 0018 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 466              	.LVL30:
+  24:Core/Src/l298n.c ****     __HAL_TIM_SetCompare(m->htim, m->channel, 0);    
+ 467              		.loc 1 24 5 view .LVU96
+ 468 001c 0122     		movs	r2, #1
+ 469 001e A189     		ldrh	r1, [r4, #12]
+ 470 0020 A068     		ldr	r0, [r4, #8]
+ 471 0022 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 472              	.LVL31:
+  25:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 473              		.loc 1 25 5 view .LVU97
+ 474 0026 6369     		ldr	r3, [r4, #20]
+ 475 0028 63B9     		cbnz	r3, .L45
+  25:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 476              		.loc 1 25 5 is_stmt 0 discriminator 1 view .LVU98
+ARM GAS  /tmp/ccHlNoK4.s 			page 11
+
+
+ 477 002a 2369     		ldr	r3, [r4, #16]
+ 478 002c 1B68     		ldr	r3, [r3]
+ 479 002e 0022     		movs	r2, #0
+ 480 0030 5A63     		str	r2, [r3, #52]
+ 481              	.L46:
+  26:Core/Src/l298n.c ****     m->dir = FORWARD;
+ 482              		.loc 1 26 5 is_stmt 1 view .LVU99
+ 483 0032 05EB8505 		add	r5, r5, r5, lsl #2
+ 484              	.LVL32:
+  26:Core/Src/l298n.c ****     m->dir = FORWARD;
+ 485              		.loc 1 26 5 is_stmt 0 view .LVU100
+ 486 0036 6900     		lsls	r1, r5, #1
+ 487 0038 2046     		mov	r0, r4
+ 488 003a FFF7FEFF 		bl	L298N_Motor_Write
+ 489              	.LVL33:
+  27:Core/Src/l298n.c **** }
+ 490              		.loc 1 27 5 is_stmt 1 view .LVU101
+  27:Core/Src/l298n.c **** }
+ 491              		.loc 1 27 12 is_stmt 0 view .LVU102
+ 492 003e 0023     		movs	r3, #0
+ 493 0040 2376     		strb	r3, [r4, #24]
+  28:Core/Src/l298n.c **** 
+ 494              		.loc 1 28 1 view .LVU103
+ 495 0042 38BD     		pop	{r3, r4, r5, pc}
+ 496              	.LVL34:
+ 497              	.L45:
+  25:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 498              		.loc 1 25 5 discriminator 2 view .LVU104
+ 499 0044 042B     		cmp	r3, #4
+ 500 0046 06D0     		beq	.L50
+  25:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 501              		.loc 1 25 5 discriminator 4 view .LVU105
+ 502 0048 082B     		cmp	r3, #8
+ 503 004a 09D0     		beq	.L51
+  25:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 504              		.loc 1 25 5 discriminator 7 view .LVU106
+ 505 004c 2369     		ldr	r3, [r4, #16]
+ 506 004e 1B68     		ldr	r3, [r3]
+ 507 0050 0022     		movs	r2, #0
+ 508 0052 1A64     		str	r2, [r3, #64]
+ 509 0054 EDE7     		b	.L46
+ 510              	.L50:
+  25:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 511              		.loc 1 25 5 discriminator 3 view .LVU107
+ 512 0056 2369     		ldr	r3, [r4, #16]
+ 513 0058 1B68     		ldr	r3, [r3]
+ 514 005a 0022     		movs	r2, #0
+ 515 005c 9A63     		str	r2, [r3, #56]
+ 516 005e E8E7     		b	.L46
+ 517              	.L51:
+  25:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 518              		.loc 1 25 5 discriminator 6 view .LVU108
+ 519 0060 2369     		ldr	r3, [r4, #16]
+ 520 0062 1B68     		ldr	r3, [r3]
+ 521 0064 0022     		movs	r2, #0
+ 522 0066 DA63     		str	r2, [r3, #60]
+ 523 0068 E3E7     		b	.L46
+ARM GAS  /tmp/ccHlNoK4.s 			page 12
+
+
+ 524              		.cfi_endproc
+ 525              	.LFE67:
+ 527              		.section	.text.L298N_Backward,"ax",%progbits
+ 528              		.align	1
+ 529              		.global	L298N_Backward
+ 530              		.syntax unified
+ 531              		.thumb
+ 532              		.thumb_func
+ 534              	L298N_Backward:
+ 535              	.LVL35:
+ 536              	.LFB68:
+  30:Core/Src/l298n.c ****     // L298N_Coast(m);
+ 537              		.loc 1 30 55 is_stmt 1 view -0
+ 538              		.cfi_startproc
+ 539              		@ args = 0, pretend = 0, frame = 0
+ 540              		@ frame_needed = 0, uses_anonymous_args = 0
+  30:Core/Src/l298n.c ****     // L298N_Coast(m);
+ 541              		.loc 1 30 55 is_stmt 0 view .LVU110
+ 542 0000 38B5     		push	{r3, r4, r5, lr}
+ 543              	.LCFI7:
+ 544              		.cfi_def_cfa_offset 16
+ 545              		.cfi_offset 3, -16
+ 546              		.cfi_offset 4, -12
+ 547              		.cfi_offset 5, -8
+ 548              		.cfi_offset 14, -4
+ 549 0002 0446     		mov	r4, r0
+ 550 0004 0D46     		mov	r5, r1
+  33:Core/Src/l298n.c ****         
+ 551              		.loc 1 33 5 is_stmt 1 view .LVU111
+ 552              	.LVL36:
+ 553              	.L53:
+  35:Core/Src/l298n.c **** 
+ 554              		.loc 1 35 5 view .LVU112
+  33:Core/Src/l298n.c ****         
+ 555              		.loc 1 33 11 discriminator 1 view .LVU113
+  33:Core/Src/l298n.c ****         
+ 556              		.loc 1 33 12 is_stmt 0 discriminator 1 view .LVU114
+ 557 0006 0121     		movs	r1, #1
+ 558 0008 2046     		mov	r0, r4
+ 559 000a FFF7FEFF 		bl	L298N_Motor_Check_Direction
+ 560              	.LVL37:
+  33:Core/Src/l298n.c ****         
+ 561              		.loc 1 33 11 discriminator 1 view .LVU115
+ 562 000e 0028     		cmp	r0, #0
+ 563 0010 F9D0     		beq	.L53
+  37:Core/Src/l298n.c ****     HAL_GPIO_WritePin(m->backward_port, m->backward_pin, RESET);
+ 564              		.loc 1 37 5 is_stmt 1 view .LVU116
+ 565 0012 0122     		movs	r2, #1
+ 566 0014 A188     		ldrh	r1, [r4, #4]
+ 567 0016 2068     		ldr	r0, [r4]
+ 568 0018 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 569              	.LVL38:
+  38:Core/Src/l298n.c ****     __HAL_TIM_SetCompare(m->htim, m->channel, 0);    
+ 570              		.loc 1 38 5 view .LVU117
+ 571 001c 0022     		movs	r2, #0
+ 572 001e A189     		ldrh	r1, [r4, #12]
+ 573 0020 A068     		ldr	r0, [r4, #8]
+ARM GAS  /tmp/ccHlNoK4.s 			page 13
+
+
+ 574 0022 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 575              	.LVL39:
+  39:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 576              		.loc 1 39 5 view .LVU118
+ 577 0026 6369     		ldr	r3, [r4, #20]
+ 578 0028 63B9     		cbnz	r3, .L54
+  39:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 579              		.loc 1 39 5 is_stmt 0 discriminator 1 view .LVU119
+ 580 002a 2369     		ldr	r3, [r4, #16]
+ 581 002c 1B68     		ldr	r3, [r3]
+ 582 002e 0022     		movs	r2, #0
+ 583 0030 5A63     		str	r2, [r3, #52]
+ 584              	.L55:
+  40:Core/Src/l298n.c ****     m->dir = BACKWARD;
+ 585              		.loc 1 40 5 is_stmt 1 view .LVU120
+ 586 0032 05EB8505 		add	r5, r5, r5, lsl #2
+ 587              	.LVL40:
+  40:Core/Src/l298n.c ****     m->dir = BACKWARD;
+ 588              		.loc 1 40 5 is_stmt 0 view .LVU121
+ 589 0036 6900     		lsls	r1, r5, #1
+ 590 0038 2046     		mov	r0, r4
+ 591 003a FFF7FEFF 		bl	L298N_Motor_Write
+ 592              	.LVL41:
+  41:Core/Src/l298n.c **** }
+ 593              		.loc 1 41 5 is_stmt 1 view .LVU122
+  41:Core/Src/l298n.c **** }
+ 594              		.loc 1 41 12 is_stmt 0 view .LVU123
+ 595 003e 0123     		movs	r3, #1
+ 596 0040 2376     		strb	r3, [r4, #24]
+  42:Core/Src/l298n.c **** void L298N_Brake(L298N_Motor *m) {
+ 597              		.loc 1 42 1 view .LVU124
+ 598 0042 38BD     		pop	{r3, r4, r5, pc}
+ 599              	.LVL42:
+ 600              	.L54:
+  39:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 601              		.loc 1 39 5 discriminator 2 view .LVU125
+ 602 0044 042B     		cmp	r3, #4
+ 603 0046 06D0     		beq	.L59
+  39:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 604              		.loc 1 39 5 discriminator 4 view .LVU126
+ 605 0048 082B     		cmp	r3, #8
+ 606 004a 09D0     		beq	.L60
+  39:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 607              		.loc 1 39 5 discriminator 7 view .LVU127
+ 608 004c 2369     		ldr	r3, [r4, #16]
+ 609 004e 1B68     		ldr	r3, [r3]
+ 610 0050 0022     		movs	r2, #0
+ 611 0052 1A64     		str	r2, [r3, #64]
+ 612 0054 EDE7     		b	.L55
+ 613              	.L59:
+  39:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 614              		.loc 1 39 5 discriminator 3 view .LVU128
+ 615 0056 2369     		ldr	r3, [r4, #16]
+ 616 0058 1B68     		ldr	r3, [r3]
+ 617 005a 0022     		movs	r2, #0
+ 618 005c 9A63     		str	r2, [r3, #56]
+ 619 005e E8E7     		b	.L55
+ARM GAS  /tmp/ccHlNoK4.s 			page 14
+
+
+ 620              	.L60:
+  39:Core/Src/l298n.c ****     L298N_Motor_Write(m, duty_pct * PWM_PERIOD / 100);
+ 621              		.loc 1 39 5 discriminator 6 view .LVU129
+ 622 0060 2369     		ldr	r3, [r4, #16]
+ 623 0062 1B68     		ldr	r3, [r3]
+ 624 0064 0022     		movs	r2, #0
+ 625 0066 DA63     		str	r2, [r3, #60]
+ 626 0068 E3E7     		b	.L55
+ 627              		.cfi_endproc
+ 628              	.LFE68:
+ 630              		.text
+ 631              	.Letext0:
+ 632              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 633              		.file 3 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 634              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
+ 635              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 636              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ 637              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 638              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
+ 639              		.file 9 "Core/Inc/l298n.h"
+ 640              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ARM GAS  /tmp/ccHlNoK4.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 l298n.c
+     /tmp/ccHlNoK4.s:19     .text.L298N_Motor_Init:00000000 $t
+     /tmp/ccHlNoK4.s:25     .text.L298N_Motor_Init:00000000 L298N_Motor_Init
+     /tmp/ccHlNoK4.s:109    .text.L298N_Motor_Write:00000000 $t
+     /tmp/ccHlNoK4.s:115    .text.L298N_Motor_Write:00000000 L298N_Motor_Write
+     /tmp/ccHlNoK4.s:160    .text.L298N_Brake:00000000 $t
+     /tmp/ccHlNoK4.s:166    .text.L298N_Brake:00000000 L298N_Brake
+     /tmp/ccHlNoK4.s:241    .text.L298N_Coast:00000000 $t
+     /tmp/ccHlNoK4.s:247    .text.L298N_Coast:00000000 L298N_Coast
+     /tmp/ccHlNoK4.s:322    .text.L298N_Motor_Check_Direction:00000000 $t
+     /tmp/ccHlNoK4.s:328    .text.L298N_Motor_Check_Direction:00000000 L298N_Motor_Check_Direction
+     /tmp/ccHlNoK4.s:425    .text.L298N_Forward:00000000 $t
+     /tmp/ccHlNoK4.s:431    .text.L298N_Forward:00000000 L298N_Forward
+     /tmp/ccHlNoK4.s:528    .text.L298N_Backward:00000000 $t
+     /tmp/ccHlNoK4.s:534    .text.L298N_Backward:00000000 L298N_Backward
+
+UNDEFINED SYMBOLS
+HAL_GPIO_WritePin
+HAL_TIM_PWM_Start
+HAL_GetTick

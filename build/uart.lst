@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cczcXyb5.s 			page 1
+ARM GAS  /tmp/ccDDX1sN.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
   46              		.loc 1 10 5 is_stmt 1 view .LVU9
   47              		.loc 1 10 30 is_stmt 0 view .LVU10
   48 000a 4381     		strh	r3, [r0, #10]	@ movhi
-ARM GAS  /tmp/cczcXyb5.s 			page 2
+ARM GAS  /tmp/ccDDX1sN.s 			page 2
 
 
   11:Core/Src/uart.c **** }
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
   97              		.loc 1 18 5 is_stmt 1 view .LVU28
   98              		.loc 1 18 18 is_stmt 0 view .LVU29
   99 001c 4389     		ldrh	r3, [r0, #10]
-ARM GAS  /tmp/cczcXyb5.s 			page 3
+ARM GAS  /tmp/ccDDX1sN.s 			page 3
 
 
  100              		.loc 1 18 5 view .LVU30
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
  148              		.loc 1 25 47 view .LVU45
  149 000c 93FBF2F1 		sdiv	r1, r3, r2
  150              	.LVL7:
-ARM GAS  /tmp/cczcXyb5.s 			page 4
+ARM GAS  /tmp/ccDDX1sN.s 			page 4
 
 
  151              		.loc 1 25 47 view .LVU46
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
  198              		.loc 1 34 5 view .LVU60
  199              		.loc 1 34 24 is_stmt 0 view .LVU61
  200 0000 4089     		ldrh	r0, [r0, #10]
-ARM GAS  /tmp/cczcXyb5.s 			page 5
+ARM GAS  /tmp/ccDDX1sN.s 			page 5
 
 
  201              	.LVL9:
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
   40:Core/Src/uart.c ****     return ring_buffer->buffer_size;
  254              		.loc 1 40 5 view .LVU69
   41:Core/Src/uart.c **** }
-ARM GAS  /tmp/cczcXyb5.s 			page 6
+ARM GAS  /tmp/ccDDX1sN.s 			page 6
 
 
  255              		.loc 1 41 1 is_stmt 0 view .LVU70
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
  304              		.cfi_def_cfa_offset 8
  305              		.cfi_offset 4, -8
  306              		.cfi_offset 14, -4
-ARM GAS  /tmp/cczcXyb5.s 			page 7
+ARM GAS  /tmp/ccDDX1sN.s 			page 7
 
 
   51:Core/Src/uart.c ****     u.uart = huart;
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
  353              		.loc 1 60 1 view .LVU87
  354 0004 7047     		bx	lr
  355              	.L18:
-ARM GAS  /tmp/cczcXyb5.s 			page 8
+ARM GAS  /tmp/ccDDX1sN.s 			page 8
 
 
  356 0006 00BF     		.align	2
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
  408              		.global	UART_Send_Data
  409              		.syntax unified
  410              		.thumb
-ARM GAS  /tmp/cczcXyb5.s 			page 9
+ARM GAS  /tmp/ccDDX1sN.s 			page 9
 
 
  411              		.thumb_func
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
  460              		@ frame_needed = 0, uses_anonymous_args = 0
   74:Core/Src/uart.c ****     if(huart->Instance == u.uart->Instance) {
  461              		.loc 1 74 5 view .LVU102
-ARM GAS  /tmp/cczcXyb5.s 			page 10
+ARM GAS  /tmp/ccDDX1sN.s 			page 10
 
 
  462              		.loc 1 74 13 is_stmt 0 view .LVU103
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
  509 0030 4BB1     		cbz	r3, .L29
  510              		.loc 1 80 13 discriminator 1 view .LVU117
  511 0032 4FF0E023 		mov	r3, #-536813568
-ARM GAS  /tmp/cczcXyb5.s 			page 11
+ARM GAS  /tmp/ccDDX1sN.s 			page 11
 
 
  512 0036 4FF08052 		mov	r2, #268435456
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
  562              		.loc 1 86 36 is_stmt 1 view -0
  563              		.cfi_startproc
  564              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/cczcXyb5.s 			page 12
+ARM GAS  /tmp/ccDDX1sN.s 			page 12
 
 
  565              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
  617              	UART_Available:
  618              	.LFB84:
   93:Core/Src/uart.c **** uint16_t UART_Available() {
-ARM GAS  /tmp/cczcXyb5.s 			page 13
+ARM GAS  /tmp/ccDDX1sN.s 			page 13
 
 
  619              		.loc 1 93 27 is_stmt 1 view -0
@@ -767,54 +767,54 @@ ARM GAS  /tmp/cczcXyb5.s 			page 1
  664              		.file 9 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
  665              		.file 10 "Core/Inc/uart.h"
  666              		.file 11 "/usr/include/newlib/string.h"
-ARM GAS  /tmp/cczcXyb5.s 			page 14
+ARM GAS  /tmp/ccDDX1sN.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 uart.c
-     /tmp/cczcXyb5.s:19     .text.Ring_Buffer_Init:00000000 $t
-     /tmp/cczcXyb5.s:25     .text.Ring_Buffer_Init:00000000 Ring_Buffer_Init
-     /tmp/cczcXyb5.s:55     .text.Ring_Buffer_Pop:00000000 $t
-     /tmp/cczcXyb5.s:61     .text.Ring_Buffer_Pop:00000000 Ring_Buffer_Pop
-     /tmp/cczcXyb5.s:120    .text.Ring_Buffer_Push:00000000 $t
-     /tmp/cczcXyb5.s:126    .text.Ring_Buffer_Push:00000000 Ring_Buffer_Push
-     /tmp/cczcXyb5.s:184    .text.Ring_Buffer_IsEmpty:00000000 $t
-     /tmp/cczcXyb5.s:190    .text.Ring_Buffer_IsEmpty:00000000 Ring_Buffer_IsEmpty
-     /tmp/cczcXyb5.s:210    .text.Ring_Buffer_IsFull:00000000 $t
-     /tmp/cczcXyb5.s:216    .text.Ring_Buffer_IsFull:00000000 Ring_Buffer_IsFull
-     /tmp/cczcXyb5.s:240    .text.Ring_Buffer_Size:00000000 $t
-     /tmp/cczcXyb5.s:246    .text.Ring_Buffer_Size:00000000 Ring_Buffer_Size
-     /tmp/cczcXyb5.s:264    .text.Ring_Buffer_Filled_Size:00000000 $t
-     /tmp/cczcXyb5.s:270    .text.Ring_Buffer_Filled_Size:00000000 Ring_Buffer_Filled_Size
-     /tmp/cczcXyb5.s:288    .text.UART_Init:00000000 $t
-     /tmp/cczcXyb5.s:294    .text.UART_Init:00000000 UART_Init
-     /tmp/cczcXyb5.s:329    .text.UART_Init:0000001c $d
-     /tmp/cczcXyb5.s:647    .bss.u:00000000 u
-     /tmp/cczcXyb5.s:640    .bss.data:00000000 data
-     /tmp/cczcXyb5.s:335    .text.UART_SetRxTaskHandle:00000000 $t
-     /tmp/cczcXyb5.s:341    .text.UART_SetRxTaskHandle:00000000 UART_SetRxTaskHandle
-     /tmp/cczcXyb5.s:358    .text.UART_SetRxTaskHandle:00000008 $d
-     /tmp/cczcXyb5.s:653    .bss.uartRxTaskHandle:00000000 uartRxTaskHandle
-     /tmp/cczcXyb5.s:363    .text.UART_Send_String:00000000 $t
-     /tmp/cczcXyb5.s:369    .text.UART_Send_String:00000000 UART_Send_String
-     /tmp/cczcXyb5.s:402    .text.UART_Send_String:0000001c $d
-     /tmp/cczcXyb5.s:407    .text.UART_Send_Data:00000000 $t
-     /tmp/cczcXyb5.s:413    .text.UART_Send_Data:00000000 UART_Send_Data
-     /tmp/cczcXyb5.s:443    .text.UART_Send_Data:00000014 $d
-     /tmp/cczcXyb5.s:448    .text.HAL_UART_RxCpltCallback:00000000 $t
-     /tmp/cczcXyb5.s:454    .text.HAL_UART_RxCpltCallback:00000000 HAL_UART_RxCpltCallback
-     /tmp/cczcXyb5.s:545    .text.HAL_UART_RxCpltCallback:00000054 $d
-     /tmp/cczcXyb5.s:553    .text.UART_Read_Byte:00000000 $t
-     /tmp/cczcXyb5.s:559    .text.UART_Read_Byte:00000000 UART_Read_Byte
-     /tmp/cczcXyb5.s:585    .text.UART_Read_Byte:0000000c $d
-     /tmp/cczcXyb5.s:590    .text.UART_Read_Line:00000000 $t
-     /tmp/cczcXyb5.s:596    .text.UART_Read_Line:00000000 UART_Read_Line
-     /tmp/cczcXyb5.s:611    .text.UART_Available:00000000 $t
-     /tmp/cczcXyb5.s:617    .text.UART_Available:00000000 UART_Available
-     /tmp/cczcXyb5.s:632    .text.UART_Available:00000008 $d
-     /tmp/cczcXyb5.s:641    .bss.data:00000000 $d
-     /tmp/cczcXyb5.s:644    .bss.u:00000000 $d
-     /tmp/cczcXyb5.s:650    .bss.uartRxTaskHandle:00000000 $d
+     /tmp/ccDDX1sN.s:19     .text.Ring_Buffer_Init:00000000 $t
+     /tmp/ccDDX1sN.s:25     .text.Ring_Buffer_Init:00000000 Ring_Buffer_Init
+     /tmp/ccDDX1sN.s:55     .text.Ring_Buffer_Pop:00000000 $t
+     /tmp/ccDDX1sN.s:61     .text.Ring_Buffer_Pop:00000000 Ring_Buffer_Pop
+     /tmp/ccDDX1sN.s:120    .text.Ring_Buffer_Push:00000000 $t
+     /tmp/ccDDX1sN.s:126    .text.Ring_Buffer_Push:00000000 Ring_Buffer_Push
+     /tmp/ccDDX1sN.s:184    .text.Ring_Buffer_IsEmpty:00000000 $t
+     /tmp/ccDDX1sN.s:190    .text.Ring_Buffer_IsEmpty:00000000 Ring_Buffer_IsEmpty
+     /tmp/ccDDX1sN.s:210    .text.Ring_Buffer_IsFull:00000000 $t
+     /tmp/ccDDX1sN.s:216    .text.Ring_Buffer_IsFull:00000000 Ring_Buffer_IsFull
+     /tmp/ccDDX1sN.s:240    .text.Ring_Buffer_Size:00000000 $t
+     /tmp/ccDDX1sN.s:246    .text.Ring_Buffer_Size:00000000 Ring_Buffer_Size
+     /tmp/ccDDX1sN.s:264    .text.Ring_Buffer_Filled_Size:00000000 $t
+     /tmp/ccDDX1sN.s:270    .text.Ring_Buffer_Filled_Size:00000000 Ring_Buffer_Filled_Size
+     /tmp/ccDDX1sN.s:288    .text.UART_Init:00000000 $t
+     /tmp/ccDDX1sN.s:294    .text.UART_Init:00000000 UART_Init
+     /tmp/ccDDX1sN.s:329    .text.UART_Init:0000001c $d
+     /tmp/ccDDX1sN.s:647    .bss.u:00000000 u
+     /tmp/ccDDX1sN.s:640    .bss.data:00000000 data
+     /tmp/ccDDX1sN.s:335    .text.UART_SetRxTaskHandle:00000000 $t
+     /tmp/ccDDX1sN.s:341    .text.UART_SetRxTaskHandle:00000000 UART_SetRxTaskHandle
+     /tmp/ccDDX1sN.s:358    .text.UART_SetRxTaskHandle:00000008 $d
+     /tmp/ccDDX1sN.s:653    .bss.uartRxTaskHandle:00000000 uartRxTaskHandle
+     /tmp/ccDDX1sN.s:363    .text.UART_Send_String:00000000 $t
+     /tmp/ccDDX1sN.s:369    .text.UART_Send_String:00000000 UART_Send_String
+     /tmp/ccDDX1sN.s:402    .text.UART_Send_String:0000001c $d
+     /tmp/ccDDX1sN.s:407    .text.UART_Send_Data:00000000 $t
+     /tmp/ccDDX1sN.s:413    .text.UART_Send_Data:00000000 UART_Send_Data
+     /tmp/ccDDX1sN.s:443    .text.UART_Send_Data:00000014 $d
+     /tmp/ccDDX1sN.s:448    .text.HAL_UART_RxCpltCallback:00000000 $t
+     /tmp/ccDDX1sN.s:454    .text.HAL_UART_RxCpltCallback:00000000 HAL_UART_RxCpltCallback
+     /tmp/ccDDX1sN.s:545    .text.HAL_UART_RxCpltCallback:00000054 $d
+     /tmp/ccDDX1sN.s:553    .text.UART_Read_Byte:00000000 $t
+     /tmp/ccDDX1sN.s:559    .text.UART_Read_Byte:00000000 UART_Read_Byte
+     /tmp/ccDDX1sN.s:585    .text.UART_Read_Byte:0000000c $d
+     /tmp/ccDDX1sN.s:590    .text.UART_Read_Line:00000000 $t
+     /tmp/ccDDX1sN.s:596    .text.UART_Read_Line:00000000 UART_Read_Line
+     /tmp/ccDDX1sN.s:611    .text.UART_Available:00000000 $t
+     /tmp/ccDDX1sN.s:617    .text.UART_Available:00000000 UART_Available
+     /tmp/ccDDX1sN.s:632    .text.UART_Available:00000008 $d
+     /tmp/ccDDX1sN.s:641    .bss.data:00000000 $d
+     /tmp/ccDDX1sN.s:644    .bss.u:00000000 $d
+     /tmp/ccDDX1sN.s:650    .bss.uartRxTaskHandle:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_UART_Receive_IT

@@ -2,21 +2,9 @@
 #define AUTONOMOUS_H
 #include <stdint.h>
 #include "l298n.h"
-#include "stm32f1xx_hal.h"
-#include <stm32f1xx_hal_tim.h>
-#include <stdbool.h>
 
-// #define PWM_PERIOD 1000
-// #define GUARD_TIME_MS 80
-// #define BASE_PWM 50.0f
-// #define MAX_RPM 230.0f
-// #define MIN_RPM 115.0f
-// #define COUNTS_PER_REV 40
 #define AUTO_PWM 55.0f
 #define AUTO_CRITICAL_DISTANCE 15
-// #define Kp 0.0f
-// #define Ki 0.0f
-// #define Kff 1.0f
 
 enum DIR
 {

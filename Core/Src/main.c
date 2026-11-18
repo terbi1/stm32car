@@ -84,6 +84,7 @@ uint8_t currentAngle = 0;
 uint8_t buffer[256];
 uint8_t isAutonomous = 0;
 uint8_t isBlocked = 0;
+uint8_t sonarScan = 0;
 
 // enum DIR
 // {
@@ -708,7 +709,7 @@ void StartMotorControlTask(void const *argument)
         continue;
       }
 
-      if (Distance <= 15 && (motor_x - motor_y) > 0 && (-motor_x - motor_y) > 0)
+      if (Distance <= 15 && (motor_x - motor_y) > 0 && (-motor_x - motor_y) > 0 && !sonarScan)
       {
         L298N_Brake(&right_motor);
         L298N_Brake(&left_motor);
@@ -844,11 +845,19 @@ void StartCommandTask(void const *argument)
         len = 0;
         continue;
       }
-      if (byte == 'H' || byte == 'G' || byte == 'F')
+
+      if (byte == 'H' 
+        || byte == 'G' 
+        || byte == 'F'
+        || byte == 'J'
+        || byte == 'K'
+        || byte == 'I'
+        || byte == 'Q')
       {
         pendingCmd = byte;
         continue;
       }
+
       if (!in_M)
         continue;
 
@@ -887,13 +896,14 @@ void StartCommandTask(void const *argument)
 void StartTelemetryTask(void const *argument)
 {
   TelemetryData telemData;
-  char temp[128];
+  char temp[256];
   for (;;)
   {
     if (xQueueReceive(telemQueue, &telemData, pdMS_TO_TICKS(500)) == pdPASS)
     {
 
-      int c = snprintf(temp, sizeof(temp), "rpm_R:%d rpm_L:%d pwm_R:%d pwm_L:%d, ticks_L:%d ticks_R:%d\r\n", (int)(telemData.rpm_R * 10), (int)(telemData.rpm_L * 10), (int)(telemData.pwm_R * 10), (int)(telemData.pwm_L * 10), left_ticks, right_ticks);
+      // int c = snprintf(temp, sizeof(temp), "rpm_R:%d rpm_L:%d pwm_R:%d pwm_L:%d ticks_L:%d ticks_R:%d angle:%d distance:%d led_r:%d led_l:%d sonar: %d autonomous:%d\r\n", (int)(telemData.rpm_R * 10), (int)(telemData.rpm_L * 10), (int)(telemData.pwm_R * 10), (int)(telemData.pwm_L * 10), left_ticks, right_ticks, (int)currentAngle, (unsigned)Distance, led_right.isOn, led_left.isOn, sonarScan, isAutonomous);
+      int c = snprintf(temp, sizeof(temp), "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\r\n", (int)(telemData.rpm_R * 10), (int)(telemData.rpm_L * 10), (int)(telemData.pwm_R * 10), (int)(telemData.pwm_L * 10), left_ticks, right_ticks, (int)currentAngle, (int)Distance, led_right.isOn, led_left.isOn, sonarScan, isAutonomous);
       // int c = snprintf(temp, sizeof(temp), "left:%d right:%d\r\n", left_ticks, right_ticks);
       //   int c = snprintf(temp, sizeof(temp), "left:%d right:%d\r\n", left_ticks, right_ticks);
       UART_Send_Data(temp, c);
@@ -961,6 +971,8 @@ void StartDefaultTask(void const * argument)
         Servo_Write_Angle(&s, 90);
         horn_flag = 1;
       }
+    } else if(!sonarScan) {
+      Servo_Write_Angle(&s, 90);
     }
 
     switch (pendingCmd)
@@ -975,10 +987,22 @@ void StartDefaultTask(void const * argument)
       LED_Toggle(&led_right);
       break;
     case 'J':
-      LED_Cycle_Blink(&led_left, 10,100);
+      if(led_left.repeat) {
+        LED_Stop_Blink(&led_left);
+      } else LED_Repeat_Blink(&led_left, 100);
       break;
     case 'K':
-      LED_Cycle_Blink(&led_right, 10,100);
+      if(led_right.repeat) {
+        LED_Stop_Blink(&led_right);
+      } else LED_Repeat_Blink(&led_right, 100);
+      break;
+    case 'I':
+      isAutonomous = 1 - isAutonomous;
+      sonarScan = 0;
+      break;
+    case 'Q':
+      if(isAutonomous) break;
+      sonarScan = 1 - sonarScan;
       break;
     default:
       break;
@@ -1001,19 +1025,20 @@ void StartDefaultTask(void const * argument)
 
     //   pendingCmd = 0;
     // }
-
-    // Servo_Write_Angle(&s, (uint8_t)currentAngle);
-    //   if(isIncreasing) {
-    //     ++currentAngle;
-    //     if(currentAngle >= 180) {
-    //       isIncreasing = 0;
-    //     }
-    //   } else {
-    //     --currentAngle;
-    //     if(currentAngle <= 0){
-    //       isIncreasing = 1;
-    //     }
-    //   }
+    if (sonarScan) {
+      Servo_Write_Angle(&s, (uint8_t)currentAngle);
+      if(isIncreasing) {
+        ++currentAngle;
+        if(currentAngle >= 180) {
+          isIncreasing = 0;
+        }
+      } else {
+        --currentAngle;
+        if(currentAngle <= 0){
+          isIncreasing = 1;
+        }
+      }
+    }
 
     osDelay(50);
   }

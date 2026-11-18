@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cciWaxro.s 			page 1
+ARM GAS  /tmp/ccdVnOMQ.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cciWaxro.s 			page 1
   40              	.LCFI0:
   41              		.cfi_def_cfa_offset 8
   42              		.cfi_offset 4, -8
-ARM GAS  /tmp/cciWaxro.s 			page 2
+ARM GAS  /tmp/ccdVnOMQ.s 			page 2
 
 
   43              		.cfi_offset 14, -4
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cciWaxro.s 			page 1
   93              	.LCFI2:
   94              		.cfi_def_cfa_offset 8
   95              		.cfi_offset 4, -8
-ARM GAS  /tmp/cciWaxro.s 			page 3
+ARM GAS  /tmp/ccdVnOMQ.s 			page 3
 
 
   96              		.cfi_offset 14, -4
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cciWaxro.s 			page 1
    6:Core/Src/led.c ****     led->isOn = 1;
  142              		.loc 1 6 5 is_stmt 1 view .LVU28
    6:Core/Src/led.c ****     led->isOn = 1;
-ARM GAS  /tmp/cciWaxro.s 			page 4
+ARM GAS  /tmp/ccdVnOMQ.s 			page 4
 
 
  143              		.loc 1 6 21 is_stmt 0 view .LVU29
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cciWaxro.s 			page 1
  184              		@ args = 0, pretend = 0, frame = 0
  185              		@ frame_needed = 0, uses_anonymous_args = 0
  186              		.loc 1 26 53 is_stmt 0 view .LVU44
-ARM GAS  /tmp/cciWaxro.s 			page 5
+ARM GAS  /tmp/ccdVnOMQ.s 			page 5
 
 
  187 0000 38B5     		push	{r3, r4, r5, lr}
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cciWaxro.s 			page 1
  237              	.LVL15:
  238              		.loc 1 32 5 is_stmt 0 view .LVU55
  239 0006 FFF7FEFF 		bl	HAL_GPIO_TogglePin
-ARM GAS  /tmp/cciWaxro.s 			page 6
+ARM GAS  /tmp/ccdVnOMQ.s 			page 6
 
 
  240              	.LVL16:
@@ -352,23 +352,15 @@ ARM GAS  /tmp/cciWaxro.s 			page 1
   44:Core/Src/led.c **** 
   45:Core/Src/led.c ****         return;
   46:Core/Src/led.c ****     }
-  47:Core/Src/led.c ****     // if(!led->isOn && !led->blinkCycles) return;
-  48:Core/Src/led.c ****     
-  49:Core/Src/led.c ****     // if(!led->isOn && led->blinkCycles) {
-  50:Core/Src/led.c ****     //     if(HAL_GetTick() >= led->stopTime + led->interval) {
-  51:Core/Src/led.c ****     //         LED_Beep_Start(led, BLINK_TIME);
-  52:Core/Src/led.c ****     //         led->blinkCycles -= led->repeat ? 0:1;
-ARM GAS  /tmp/cciWaxro.s 			page 7
+  47:Core/Src/led.c **** 
+  48:Core/Src/led.c ****     if(HAL_GetTick() >= led->stopTime) {
+  49:Core/Src/led.c ****         LED_Off(led);
+  50:Core/Src/led.c ****     }
+  51:Core/Src/led.c **** }
+ 279              		.loc 1 51 1 view .LVU65
+ARM GAS  /tmp/ccdVnOMQ.s 			page 7
 
 
-  53:Core/Src/led.c ****     //     }
-  54:Core/Src/led.c ****     // }
-  55:Core/Src/led.c **** 
-  56:Core/Src/led.c ****     if(HAL_GetTick() >= led->stopTime) {
-  57:Core/Src/led.c ****         LED_Off(led);
-  58:Core/Src/led.c ****     }
-  59:Core/Src/led.c **** }
- 279              		.loc 1 59 1 view .LVU65
  280 000c 10BD     		pop	{r4, pc}
  281              	.LVL19:
  282              	.L25:
@@ -416,24 +408,24 @@ ARM GAS  /tmp/cciWaxro.s 			page 1
  312 0030 ECE7     		b	.L20
  313              	.LVL22:
  314              	.L21:
-  56:Core/Src/led.c ****         LED_Off(led);
- 315              		.loc 1 56 5 view .LVU78
-ARM GAS  /tmp/cciWaxro.s 			page 8
-
-
-  56:Core/Src/led.c ****         LED_Off(led);
- 316              		.loc 1 56 8 is_stmt 0 view .LVU79
+  48:Core/Src/led.c ****         LED_Off(led);
+ 315              		.loc 1 48 5 view .LVU78
+  48:Core/Src/led.c ****         LED_Off(led);
+ 316              		.loc 1 48 8 is_stmt 0 view .LVU79
  317 0032 FFF7FEFF 		bl	HAL_GetTick
  318              	.LVL23:
-  56:Core/Src/led.c ****         LED_Off(led);
- 319              		.loc 1 56 28 discriminator 1 view .LVU80
+  48:Core/Src/led.c ****         LED_Off(led);
+ 319              		.loc 1 48 28 discriminator 1 view .LVU80
  320 0036 A368     		ldr	r3, [r4, #8]
-  56:Core/Src/led.c ****         LED_Off(led);
- 321              		.loc 1 56 7 discriminator 1 view .LVU81
+  48:Core/Src/led.c ****         LED_Off(led);
+ARM GAS  /tmp/ccdVnOMQ.s 			page 8
+
+
+ 321              		.loc 1 48 7 discriminator 1 view .LVU81
  322 0038 9842     		cmp	r0, r3
  323 003a E7D3     		bcc	.L20
-  57:Core/Src/led.c ****     }
- 324              		.loc 1 57 9 is_stmt 1 view .LVU82
+  49:Core/Src/led.c ****     }
+ 324              		.loc 1 49 9 is_stmt 1 view .LVU82
  325 003c 2046     		mov	r0, r4
  326 003e FFF7FEFF 		bl	LED_Off
  327              	.LVL24:
@@ -449,23 +441,23 @@ ARM GAS  /tmp/cciWaxro.s 			page 1
  339              	LED_Cycle_Blink:
  340              	.LVL25:
  341              	.LFB71:
-  60:Core/Src/led.c **** 
-  61:Core/Src/led.c **** void LED_Cycle_Blink(LED *led, uint8_t cycles, uint32_t interval) {
- 342              		.loc 1 61 67 view -0
+  52:Core/Src/led.c **** 
+  53:Core/Src/led.c **** void LED_Cycle_Blink(LED *led, uint8_t cycles, uint32_t interval) {
+ 342              		.loc 1 53 67 view -0
  343              		.cfi_startproc
  344              		@ args = 0, pretend = 0, frame = 0
  345              		@ frame_needed = 0, uses_anonymous_args = 0
  346              		@ link register save eliminated.
-  62:Core/Src/led.c ****     led->blinkCycles = cycles;
- 347              		.loc 1 62 5 view .LVU84
- 348              		.loc 1 62 22 is_stmt 0 view .LVU85
+  54:Core/Src/led.c ****     led->blinkCycles = cycles;
+ 347              		.loc 1 54 5 view .LVU84
+ 348              		.loc 1 54 22 is_stmt 0 view .LVU85
  349 0000 0174     		strb	r1, [r0, #16]
-  63:Core/Src/led.c ****     led->interval = interval;
- 350              		.loc 1 63 5 is_stmt 1 view .LVU86
- 351              		.loc 1 63 19 is_stmt 0 view .LVU87
+  55:Core/Src/led.c ****     led->interval = interval;
+ 350              		.loc 1 55 5 is_stmt 1 view .LVU86
+ 351              		.loc 1 55 19 is_stmt 0 view .LVU87
  352 0002 C260     		str	r2, [r0, #12]
-  64:Core/Src/led.c **** }
- 353              		.loc 1 64 1 view .LVU88
+  56:Core/Src/led.c **** }
+ 353              		.loc 1 56 1 view .LVU88
  354 0004 7047     		bx	lr
  355              		.cfi_endproc
  356              	.LFE71:
@@ -478,63 +470,95 @@ ARM GAS  /tmp/cciWaxro.s 			page 1
  365              	LED_Repeat_Blink:
  366              	.LVL26:
  367              	.LFB72:
-ARM GAS  /tmp/cciWaxro.s 			page 9
-
-
-  65:Core/Src/led.c **** 
-  66:Core/Src/led.c **** void LED_Repeat_Blink(LED *led, uint32_t interval) {
- 368              		.loc 1 66 52 is_stmt 1 view -0
+  57:Core/Src/led.c **** 
+  58:Core/Src/led.c **** void LED_Repeat_Blink(LED *led, uint32_t interval) {
+ 368              		.loc 1 58 52 is_stmt 1 view -0
  369              		.cfi_startproc
  370              		@ args = 0, pretend = 0, frame = 0
  371              		@ frame_needed = 0, uses_anonymous_args = 0
  372              		@ link register save eliminated.
-  67:Core/Src/led.c ****     led->repeat = 1;
- 373              		.loc 1 67 5 view .LVU90
- 374              		.loc 1 67 17 is_stmt 0 view .LVU91
+  59:Core/Src/led.c ****     led->repeat = 1;
+ARM GAS  /tmp/ccdVnOMQ.s 			page 9
+
+
+ 373              		.loc 1 59 5 view .LVU90
+ 374              		.loc 1 59 17 is_stmt 0 view .LVU91
  375 0000 0123     		movs	r3, #1
  376 0002 4374     		strb	r3, [r0, #17]
-  68:Core/Src/led.c ****     led->interval = interval;
- 377              		.loc 1 68 5 is_stmt 1 view .LVU92
- 378              		.loc 1 68 19 is_stmt 0 view .LVU93
+  60:Core/Src/led.c ****     led->interval = interval;
+ 377              		.loc 1 60 5 is_stmt 1 view .LVU92
+ 378              		.loc 1 60 19 is_stmt 0 view .LVU93
  379 0004 C160     		str	r1, [r0, #12]
-  69:Core/Src/led.c ****     led->blinkCycles = 1;
- 380              		.loc 1 69 5 is_stmt 1 view .LVU94
- 381              		.loc 1 69 22 is_stmt 0 view .LVU95
+  61:Core/Src/led.c ****     led->blinkCycles = 1;
+ 380              		.loc 1 61 5 is_stmt 1 view .LVU94
+ 381              		.loc 1 61 22 is_stmt 0 view .LVU95
  382 0006 0374     		strb	r3, [r0, #16]
-  70:Core/Src/led.c **** }...
- 383              		.loc 1 70 1 view .LVU96
+  62:Core/Src/led.c **** }
+ 383              		.loc 1 62 1 view .LVU96
  384 0008 7047     		bx	lr
  385              		.cfi_endproc
  386              	.LFE72:
- 388              		.text
- 389              	.Letext0:
- 390              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
- 391              		.file 3 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
- 392              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
- 393              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
- 394              		.file 6 "Core/Inc/led.h"
- 395              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
-ARM GAS  /tmp/cciWaxro.s 			page 10
+ 388              		.section	.text.LED_Stop_Blink,"ax",%progbits
+ 389              		.align	1
+ 390              		.global	LED_Stop_Blink
+ 391              		.syntax unified
+ 392              		.thumb
+ 393              		.thumb_func
+ 395              	LED_Stop_Blink:
+ 396              	.LVL27:
+ 397              	.LFB73:
+  63:Core/Src/led.c **** 
+  64:Core/Src/led.c **** void LED_Stop_Blink(LED *led) {
+ 398              		.loc 1 64 31 is_stmt 1 view -0
+ 399              		.cfi_startproc
+ 400              		@ args = 0, pretend = 0, frame = 0
+ 401              		@ frame_needed = 0, uses_anonymous_args = 0
+ 402              		@ link register save eliminated.
+  65:Core/Src/led.c ****     led->repeat = 0;
+ 403              		.loc 1 65 5 view .LVU98
+ 404              		.loc 1 65 17 is_stmt 0 view .LVU99
+ 405 0000 0023     		movs	r3, #0
+ 406 0002 4374     		strb	r3, [r0, #17]
+  66:Core/Src/led.c ****     led->blinkCycles = 0;
+ 407              		.loc 1 66 5 is_stmt 1 view .LVU100
+ 408              		.loc 1 66 22 is_stmt 0 view .LVU101
+ 409 0004 0374     		strb	r3, [r0, #16]
+  67:Core/Src/led.c **** }...
+ 410              		.loc 1 67 1 view .LVU102
+ 411 0006 7047     		bx	lr
+ 412              		.cfi_endproc
+ 413              	.LFE73:
+ 415              		.text
+ 416              	.Letext0:
+ 417              		.file 2 "/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h"
+ 418              		.file 3 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 419              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
+ 420              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ 421              		.file 6 "Core/Inc/led.h"
+ 422              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ARM GAS  /tmp/ccdVnOMQ.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 led.c
-     /tmp/cciWaxro.s:19     .text.LED_On:00000000 $t
-     /tmp/cciWaxro.s:25     .text.LED_On:00000000 LED_On
-     /tmp/cciWaxro.s:71     .text.LED_Off:00000000 $t
-     /tmp/cciWaxro.s:77     .text.LED_Off:00000000 LED_Off
-     /tmp/cciWaxro.s:117    .text.LED_Init:00000000 $t
-     /tmp/cciWaxro.s:123    .text.LED_Init:00000000 LED_Init
-     /tmp/cciWaxro.s:173    .text.LED_Beep_Start:00000000 $t
-     /tmp/cciWaxro.s:179    .text.LED_Beep_Start:00000000 LED_Beep_Start
-     /tmp/cciWaxro.s:215    .text.LED_Toggle:00000000 $t
-     /tmp/cciWaxro.s:221    .text.LED_Toggle:00000000 LED_Toggle
-     /tmp/cciWaxro.s:247    .text.LED_Update:00000000 $t
-     /tmp/cciWaxro.s:253    .text.LED_Update:00000000 LED_Update
-     /tmp/cciWaxro.s:333    .text.LED_Cycle_Blink:00000000 $t
-     /tmp/cciWaxro.s:339    .text.LED_Cycle_Blink:00000000 LED_Cycle_Blink
-     /tmp/cciWaxro.s:359    .text.LED_Repeat_Blink:00000000 $t
-     /tmp/cciWaxro.s:365    .text.LED_Repeat_Blink:00000000 LED_Repeat_Blink
+     /tmp/ccdVnOMQ.s:19     .text.LED_On:00000000 $t
+     /tmp/ccdVnOMQ.s:25     .text.LED_On:00000000 LED_On
+     /tmp/ccdVnOMQ.s:71     .text.LED_Off:00000000 $t
+     /tmp/ccdVnOMQ.s:77     .text.LED_Off:00000000 LED_Off
+     /tmp/ccdVnOMQ.s:117    .text.LED_Init:00000000 $t
+     /tmp/ccdVnOMQ.s:123    .text.LED_Init:00000000 LED_Init
+     /tmp/ccdVnOMQ.s:173    .text.LED_Beep_Start:00000000 $t
+     /tmp/ccdVnOMQ.s:179    .text.LED_Beep_Start:00000000 LED_Beep_Start
+     /tmp/ccdVnOMQ.s:215    .text.LED_Toggle:00000000 $t
+     /tmp/ccdVnOMQ.s:221    .text.LED_Toggle:00000000 LED_Toggle
+     /tmp/ccdVnOMQ.s:247    .text.LED_Update:00000000 $t
+     /tmp/ccdVnOMQ.s:253    .text.LED_Update:00000000 LED_Update
+     /tmp/ccdVnOMQ.s:333    .text.LED_Cycle_Blink:00000000 $t
+     /tmp/ccdVnOMQ.s:339    .text.LED_Cycle_Blink:00000000 LED_Cycle_Blink
+     /tmp/ccdVnOMQ.s:359    .text.LED_Repeat_Blink:00000000 $t
+     /tmp/ccdVnOMQ.s:365    .text.LED_Repeat_Blink:00000000 LED_Repeat_Blink
+     /tmp/ccdVnOMQ.s:389    .text.LED_Stop_Blink:00000000 $t
+     /tmp/ccdVnOMQ.s:395    .text.LED_Stop_Blink:00000000 LED_Stop_Blink
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin

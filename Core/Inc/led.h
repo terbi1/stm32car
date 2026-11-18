@@ -26,5 +26,7 @@ void LED_Beep_Start(LED* led, uint16_t duration_ms);
 void LED_Update(LED*led);
 void LED_Cycle_Blink(LED *led, uint8_t cycles, uint32_t interval);
 void LED_Repeat_Blink(LED *led, uint32_t interval);
+void LED_Stop_Blink(LED *led);
+
 
 #endif

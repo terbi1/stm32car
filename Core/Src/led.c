@@ -60,3 +60,8 @@ void LED_Repeat_Blink(LED *led, uint32_t interval) {
     led->interval = interval;
     led->blinkCycles = 1;
 }
+
+void LED_Stop_Blink(LED *led) {
+    led->repeat = 0;
+    led->blinkCycles = 0;
+}

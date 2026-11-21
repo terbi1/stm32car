@@ -6,7 +6,8 @@ Protocol (taken from main.c):
               'H' horn | 'G' toggle left LED | 'F' toggle right LED
               'J' blink left LED | 'K' blink right LED
               'I' toggle autonomous mode | 'Q' toggle sonar scan
-  car -> PC   "rpm_R:.. rpm_L:.. pwm_R:.. pwm_L:.., ticks_L:.. ticks_R:.. angle:.. distance:..\r\n"
+  car -> PC   CSV line, 12 fields:
+              rpm_R,rpm_L,pwm_R,pwm_L,ticks_L,ticks_R,angle,distance,led_R,led_L,scan,auto\r\n
               (rpm and pwm are sent multiplied by 10)
 
 Run:
@@ -34,14 +35,8 @@ MAX_RPM_DISPLAY = 250.0      # full scale of the RPM bars (set to your MAX_RPM)
 OBSTACLE_CM = 15             # firmware brakes at Distance <= 15
 RADAR_RANGE_CM = 100
 TELEM_TIMEOUT = 1.5          # s without telemetry -> "stale"
-# In the firmware, case 'I' has no `break`, so it falls through into case 'Q'
-# and toggles sonarScan as well. Keep True to mirror that; set False once you add the break.
-I_ALSO_TOGGLES_SCAN = True
-
-TELEM_RE = re.compile(
-    r"rpm_R:(-?\d+)\s+rpm_L:(-?\d+)\s+pwm_R:(-?\d+)\s+pwm_L:(-?\d+),?\s+"
-    r"ticks_L:(-?\d+)\s+ticks_R:(-?\d+)\s+angle:(-?\d+)\s+distance:(\d+)"
-)
+N_FIELDS = 12
+LOCAL_HOLD = 0.5             # s: after a button press, trust the local guess until telemetry catches up
 
 # ------------------------------------------------------------- telemetry --
 class Telemetry:
@@ -53,6 +48,8 @@ class Telemetry:
         self.ticks_L = self.ticks_R = 0
         self.angle = 90
         self.distance = 400
+        self.led_right = self.led_left = False
+        self.scan = self.auto = False
         self.last_update = 0.0
 
     def feed(self, data: bytes):
@@ -65,22 +62,28 @@ class Telemetry:
                 self._parse(line.decode("utf-8", errors="ignore"))
 
     def _parse(self, line):
-        m = TELEM_RE.search(line)
-        if not m:
+        parts = line.strip().split(",")
+        if len(parts) != N_FIELDS:
             return
-        rR, rL, pR, pL, tL, tR, ang, dist = (int(g) for g in m.groups())
+        try:
+            rR, rL, pR, pL, tL, tR, ang, dist, lR, lL, scan, auto = (int(p) for p in parts)
+        except ValueError:
+            return                                   # partial / corrupted line
         self.rpm_R, self.rpm_L = rR / 10.0, rL / 10.0
         self.pwm_R, self.pwm_L = pR / 10.0, pL / 10.0
         self.ticks_L, self.ticks_R = tL, tR
         self.angle = max(0, min(180, ang))
         self.distance = dist
+        self.led_right, self.led_left = bool(lR), bool(lL)
+        self.scan, self.auto = bool(scan), bool(auto)
         self.last_update = time.monotonic()
 
     def snapshot(self):
         with self.lock:
             return dict(rpm_L=self.rpm_L, rpm_R=self.rpm_R, pwm_L=self.pwm_L, pwm_R=self.pwm_R,
                         ticks_L=self.ticks_L, ticks_R=self.ticks_R, angle=self.angle,
-                        distance=self.distance, last_update=self.last_update)
+                        distance=self.distance, led_left=self.led_left, led_right=self.led_right,
+                        scan=self.scan, auto=self.auto, last_update=self.last_update)
 
 # ----------------------------------------------------------------- links --
 class BleLink:
@@ -141,6 +144,8 @@ class DemoLink:
         self.x = self.y = 0
         self.scan = False
         self.auto = False
+        self.led_l = self.led_r = False
+        self.blink_l = self.blink_r = 0.0
 
     def start(self):
         threading.Thread(target=self._run, daemon=True).start()
@@ -154,11 +159,19 @@ class DemoLink:
             except ValueError:
                 pass
         elif s == "Q":
-            self.scan = not self.scan
+            if not self.auto:                 # firmware ignores Q in autonomous mode
+                self.scan = not self.scan
         elif s == "I":
             self.auto = not self.auto
-            if I_ALSO_TOGGLES_SCAN:
-                self.scan = not self.scan
+            self.scan = False                 # firmware clears sonarScan on I
+        elif s == "G":
+            self.led_l = not self.led_l
+        elif s == "F":
+            self.led_r = not self.led_r
+        elif s == "J":
+            self.blink_l = time.monotonic() + 1.0
+        elif s == "K":
+            self.blink_r = time.monotonic() + 1.0
         return True
 
     def _run(self):
@@ -180,8 +193,11 @@ class DemoLink:
                     inc = -inc
             t += 0.1
             dist = int(45 + 40 * math.sin(ang / 25.0 + t * 0.5))
-            line = (f"rpm_R:{int(rR*10)} rpm_L:{int(rL*10)} pwm_R:{int(pR*10)} pwm_L:{int(pL*10)}, "
-                    f"ticks_L:{int(ticksL)} ticks_R:{int(ticksR)} angle:{ang} distance:{dist}\r\n")
+            now = time.monotonic()
+            led_l = self.led_l or (now < self.blink_l and int(now * 5) % 2 == 0)
+            led_r = self.led_r or (now < self.blink_r and int(now * 5) % 2 == 0)
+            line = (f"{int(rR*10)},{int(rL*10)},{int(pR*10)},{int(pL*10)},{int(ticksL)},{int(ticksR)},"
+                    f"{ang},{dist},{int(led_r)},{int(led_l)},{int(self.scan)},{int(self.auto)}\r\n")
             self.telem.feed(line.encode())
             time.sleep(0.1)
 
@@ -388,9 +404,22 @@ def draw_radar(surf, cx, cy, R, hist, cur_angle, now):
 
 
 class CarState:
-    """What the GUI believes the car is doing (the firmware does not report these)."""
+    """LED / scan / auto flags. Taken from telemetry; a button press sets them optimistically
+    and telemetry is ignored for LOCAL_HOLD seconds so the indicator doesn't flicker back."""
     led_left = led_right = auto = scan = False
     horn_until = 0.0
+
+    def __init__(self):
+        self.touched = {}
+
+    def toggle(self, name):
+        setattr(self, name, not getattr(self, name))
+        self.touched[name] = time.monotonic()
+
+    def sync(self, tm, now):
+        for name in ("led_left", "led_right", "auto", "scan"):
+            if now - self.touched.get(name, 0.0) > LOCAL_HOLD:
+                setattr(self, name, tm[name])
 
 # ------------------------------------------------------------------ main --
 def main():
@@ -420,21 +449,23 @@ def main():
 
     def toggle_auto():
         cmd(b"I")
-        st.auto = not st.auto
-        if I_ALSO_TOGGLES_SCAN:
-            st.scan = not st.scan
+        st.toggle("auto")
+        st.scan = False                       # firmware clears sonarScan on I
+        st.touched["scan"] = time.monotonic()
 
     def act_horn():
         cmd(b"H"); st.horn_until = time.monotonic() + 0.5
 
     def act_led_l():
-        cmd(b"G"); st.led_left = not st.led_left
+        cmd(b"G"); st.toggle("led_left")
 
     def act_led_r():
-        cmd(b"F"); st.led_right = not st.led_right
+        cmd(b"F"); st.toggle("led_right")
 
     def act_scan():
-        cmd(b"Q"); st.scan = not st.scan
+        if st.auto:                           # firmware ignores Q in autonomous mode
+            return
+        cmd(b"Q"); st.toggle("scan")
 
     def act_stop():
         joystick.reset()
@@ -497,6 +528,8 @@ def main():
 
         tm = telem.snapshot()
         fresh = now - tm["last_update"] < TELEM_TIMEOUT
+        if fresh:
+            st.sync(tm, now)
         if tm["last_update"] > last_seen:
             last_seen = tm["last_update"]
             if tm["distance"] <= RADAR_RANGE_CM:
@@ -554,7 +587,7 @@ def main():
                  ("R LED", st.led_right, AMBER), ("OBSTACLE", obstacle, RED), ("TELEM", fresh, GREEN)]
         for i, (lbl, on, col) in enumerate(pills):
             pill(screen, (x0 + i * (pw + 9), 610, pw, 30), lbl, on, col)
-        text(screen, "WASD / arrows drive  |  Space horn  |  Esc quit   (LED / mode states are tracked locally)",
+        text(screen, "WASD / arrows drive  |  Space horn  |  Esc quit   (LED, scan and mode states come from telemetry)",
              12, DIM, (435, 656))
 
         if obstacle:
